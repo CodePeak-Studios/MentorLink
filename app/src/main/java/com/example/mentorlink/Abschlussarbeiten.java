@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -13,10 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class Abschlussarbeiten extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
 
     RecyclerViewAdapter adapter;
+    DBHandler dbHandler;
 
 
 
@@ -31,13 +39,20 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             return insets;
         });
 
-        //Sample-Daten, um die RV zu befuellen
+        dbHandler = new DBHandler(getApplicationContext());
+
+        //Sample-Daten, um die RV zu testen
+
+
+        Abschlussarbeit meineerste = dbHandler.getAbschlussarbeit();
+
         ArrayList<String> abschlussarbeiten = new ArrayList<>();
         abschlussarbeiten.add("Blockchain-Technologie");
         abschlussarbeiten.add("Cybersecurity und Datenschutz");
         abschlussarbeiten.add("Agile Softwareentwicklung");
         abschlussarbeiten.add("KI und Maschinelles Lernen");
         abschlussarbeiten.add("Internet of Things");
+        abschlussarbeiten.add(meineerste.getUeberschrift());
 
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeiten);

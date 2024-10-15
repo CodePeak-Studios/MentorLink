@@ -105,4 +105,101 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query4);
     }
 
+    /**********************************************************************************************
+     |                                 User Methoden                                              |
+     **********************************************************************************************/
+
+    public User getUser() {
+
+        User user = new User();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user.setId(cursor.getInt(0));
+            user.setVorname(cursor.getString(1));
+            user.setNachname(cursor.getString(2));
+            user.setMail(cursor.getString(3));
+            user.setPasswort(cursor.getString(4));
+            user.setTeamsUser(cursor.getString(5));
+            user.setRolle(cursor.getInt(6));
+            user.setAuslastung(cursor.getInt(7));
+            user.setFachbereiche(cursor.getString(8));
+
+            cursor.close();
+
+        }
+        return user;
+    }
+
+    public void updateUser(User user) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(col_VORNAME, user.getVorname());
+        values.put(col_NACHNAME, user.getNachname());
+        values.put(col_EMAIL, user.getMail());
+        values.put(col_PASSWORT, user.getPasswort());
+        values.put(col_TEAMSNAME, user.getTeamsUser());
+        values.put(col_ROLLE, user.getRolle());
+        values.put(col_AUSLASTUNG, user.getAuslastung());
+        values.put(col_FACHBEREICHE, user.getFachbereiche());
+
+        db.update(Table_FIRST, values, col_ID + "= " + user.getId(), null);
+        db.close();
+    }
+
+    /**********************************************************************************************
+     |                                 Abschlussarbeiten Methoden                                 |
+     **********************************************************************************************/
+
+    public Abschlussarbeit getAbschlussarbeit() {
+
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            abschlussarbeit.setId(cursor.getInt(0));
+            abschlussarbeit.setKategorie(cursor.getInt(1));
+            abschlussarbeit.setUeberschrift(cursor.getString(2));
+            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+            abschlussarbeit.setStudent(cursor.getInt(4));
+            abschlussarbeit.setBetreuer(cursor.getInt(5));
+            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+            abschlussarbeit.setStatus(cursor.getInt(7));
+
+            cursor.close();
+        }
+        return abschlussarbeit;
+    }
+
+    public void updateAbschlussarbeit(Abschlussarbeit abschlussarbeit) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(col_KATEGORIE, abschlussarbeit.getKategorie());
+        values.put(col_UEBERSCHRIFT, abschlussarbeit.getUeberschrift());
+        values.put(col_FACHBEREICHE, abschlussarbeit.getKurzbeschreibung());
+        values.put(col_STUDENT, abschlussarbeit.getStudent());
+        values.put(col_BETREUER, abschlussarbeit.getBetreuer());
+        values.put(col_ZWEITGUTACHTER, abschlussarbeit.getZweitgutachter());
+        values.put(col_STATUS, abschlussarbeit.getStatus());
+
+        db.update(Table_SECOND, values, col_ID_ABSCHLUSSARBEITEN + "= " + abschlussarbeit.getId(), null);
+        db.close();
+    }
+
 }

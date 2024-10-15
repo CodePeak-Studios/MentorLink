@@ -106,6 +106,46 @@ public class Abschlussarbeit
      |                                       Funktionen                                            |
      **********************************************************************************************/
 
+    public String getKategorieName(int kategorie)
+    {
+        String kategorieName;
+
+        switch(status)
+        {
+            case 1:
+                kategorieName = "Architektur & Bau";
+                break;
+            case 2:
+                kategorieName = "Design & Medien";
+                break;
+            case 3:
+                kategorieName = "Gesundheit & Soziales";
+                break;
+            case 4:
+                kategorieName = "IT & Technik";
+                break;
+            case 5:
+                kategorieName = "Marketing & Kommunikation";
+                break;
+            case 6:
+                kategorieName = "Personal & Recht";
+                break;
+            case 7:
+                kategorieName = "Pädagogik & Psychologie";
+                break;
+            case 8:
+                kategorieName = "Tourismus & Hospitality";
+                break;
+            case 9:
+                kategorieName = "Wirtschaft & Management";
+                break;
+            default:
+                kategorieName = "Kategoriefehler";
+        }
+        return kategorieName;
+    }
+
+
     public String getStatusName(int status)
     {
         String statusName;

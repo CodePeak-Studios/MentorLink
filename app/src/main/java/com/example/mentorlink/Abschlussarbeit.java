@@ -101,4 +101,50 @@ public class Abschlussarbeit
     public void setStatus(int status) {
         this.status = status;
     }
+
+    /**********************************************************************************************
+     |                                       Funktionen                                            |
+     **********************************************************************************************/
+
+    public String getStatusName(int status)
+    {
+        String statusName;
+
+        switch(status)
+        {
+            case 1:
+                statusName = "Offen";
+                break;
+            case 2:
+                statusName = "in Abstimmung";
+                break;
+            case 3:
+                statusName = "Angemeldet";
+                break;
+            case 4:
+                statusName = "in Bearbeitung";
+                break;
+            case 5:
+                statusName = "Abgegeben";
+                break;
+            case 6:
+                statusName = "in Korrektur";
+                break;
+            case 7:
+                statusName = "Kolloquium terminiert";
+                break;
+            case 8:
+                statusName = "Kolloquium beendet - in Abrechnung";
+                break;
+            case 9:
+                statusName = "Rechnung gestellt";
+                break;
+            case 10:
+                statusName = "Rechnung beglichen";
+                break;
+            default:
+                statusName = "Statusfehler";
+        }
+        return statusName;
+    }
 }

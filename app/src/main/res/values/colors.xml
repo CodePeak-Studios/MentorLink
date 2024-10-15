@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="hellblau">#4dfbff</color>
+    <color name="darkHellblau">#00e8ed</color>
+    <color name="green">#55ff4d</color>
+    <color name="darkGreen">#0bf000</color>
+    <color name="rot">#ff4757</color>
+    <color name="darkRot">#e63d4b</color>
+    <color name="pink">#fe4df9</color>
+    <color name="darkPink">#e837e5</color>
+    <color name="orange">#ffa73a</color>
+    <color name="grau_weiss">#f3f3f5</color>
+    <color name="buttonBlau">#3772ff</color>
+
+
 </resources>

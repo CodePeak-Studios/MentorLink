@@ -3,8 +3,6 @@ package com.example.mentorlink;
 public class User
 {
 
-
-
     private int id;
     private String vorname;
     private String nachname;
@@ -43,72 +41,72 @@ public class User
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getVorname() {
         return vorname;
-    }
-
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
     }
 
     public String getNachname() {
         return nachname;
     }
 
-    public void setNachname(String nachname) {
-        this.nachname = nachname;
-    }
-
     public String getPasswort() {
         return passwort;
-    }
-
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
     }
 
     public String getMail() {
         return mail;
     }
 
-    /**********************************************************************************************
-     |                                          Setter                                             |
-     **********************************************************************************************/
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
     public String getTeamsUser() {
         return teamsUser;
-    }
-
-    public void setTeamsUser(String teamsUser) {
-        this.teamsUser = teamsUser;
     }
 
     public int getRolle() {
         return rolle;
     }
 
-    public void setRolle(int rolle) {
-        this.rolle = rolle;
-    }
-
     public int getAuslastung() {
         return auslastung;
     }
 
-    public void setAuslastung(int auslastung) {
-        this.auslastung = auslastung;
-    }
-
     public String getFachbereiche() {
         return fachbereiche;
+    }
+
+    /**********************************************************************************************
+     |                                          Setter                                             |
+     **********************************************************************************************/
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setTeamsUser(String teamsUser) {
+        this.teamsUser = teamsUser;
+    }
+
+    public void setRolle(int rolle) {
+        this.rolle = rolle;
+    }
+
+    public void setAuslastung(int auslastung) {
+        this.auslastung = auslastung;
     }
 
     public void setFachbereiche(String fachbereiche) {

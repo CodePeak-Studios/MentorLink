@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartAbschlussarbeiten;
     private Button btnStartMeineThemen;
 
+    DBHandler dbHandler;
 
 
     @Override
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         btnStartAbschlussarbeiten = findViewById(R.id.btnStartAbschlussarbeiten);
         btnStartMeineThemen = findViewById(R.id.btnStartMeineThemen);
 
+        dbHandler = new DBHandler(this);
+        dbHandler.getWritableDatabase();
 
         btnStartBetreuerUebersicht.setOnClickListener(new View.OnClickListener()
         {

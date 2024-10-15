@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dddddd"
+        android:background="@color/grau_weiss"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/btnStartBetreuerUebersicht"
         android:layout_width="wrap_content"
-        android:minWidth="315dp"
+        android:minWidth="325dp"
         android:layout_height="wrap_content"
         android:minHeight="70dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,6 +44,7 @@
         android:layout_marginTop="10dp"
         android:text="Betreuer-Übersicht"
         android:textSize="24sp"
+        android:backgroundTint="@color/buttonBlau"
         />
 
 
@@ -64,21 +65,22 @@
     <Button
         android:id="@+id/btnStartAbschlussarbeiten"
         android:layout_width="wrap_content"
-        android:minWidth="315dp"
+        android:minWidth="325dp"
         android:layout_height="wrap_content"
         android:minHeight="70dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStartBereichBetreuer"
         android:layout_marginTop="10dp"
-        android:text="Meine Aschlussarbeiten"
+        android:text="Meine Abschlussarbeiten"
         android:textSize="24sp"
+        android:backgroundTint="@color/buttonBlau"
         />
 
     <Button
         android:id="@+id/btnStartMeineThemen"
         android:layout_width="wrap_content"
-        android:minWidth="315dp"
+        android:minWidth="325dp"
         android:layout_height="wrap_content"
         android:minHeight="70dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -86,6 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnStartAbschlussarbeiten"
         android:text="Meine Themen"
         android:textSize="24sp"
+        android:backgroundTint="@color/buttonBlau"
         />
 
 

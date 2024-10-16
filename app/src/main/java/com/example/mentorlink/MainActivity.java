@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
                 startActivity(i);
             }
         });
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MeineThemen.class);
+                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
                 startActivity(i);
             }
         });

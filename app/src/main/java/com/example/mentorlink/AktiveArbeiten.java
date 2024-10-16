@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
+public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAdapterAktiveArbeiten.ItemClickListener {
 
-    RecyclerViewAdapter adapter;
+    RecyclerViewAdapterAktiveArbeiten adapter;
     DBHandler dbHandler;
 
     @Override
@@ -33,13 +33,13 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         dbHandler = new DBHandler(getApplicationContext());
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 1);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(1);
 
 
         //RecyclerView erstellen
-        RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeiten);
+        RecyclerView recyclerView = findViewById(R.id.rvAktiveArbeiten);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerViewAdapter(this, abschlussarbeiten);
+        adapter = new RecyclerViewAdapterAktiveArbeiten(this, abschlussarbeiten);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 

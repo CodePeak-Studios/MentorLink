@@ -371,6 +371,38 @@ public class DBHandler extends SQLiteOpenHelper {
         return abschlussarbeiten;
     }
 
+    public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
+
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND
+                + " WHERE " + "(" + col_BETREUER + " = " + userID
+                + " OR " + col_ZWEITGUTACHTER + " = " + userID + ")"
+                + " AND " + col_STATUS + " IS NOT " + 1;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+                abschlussarbeit.setId(cursor.getInt(0));
+                abschlussarbeit.setKategorie(cursor.getInt(1));
+                abschlussarbeit.setUeberschrift(cursor.getString(2));
+                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+                abschlussarbeit.setStudent(cursor.getInt(4));
+                abschlussarbeit.setBetreuer(cursor.getInt(5));
+                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+                abschlussarbeit.setStatus(cursor.getInt(7));
+                abschlussarbeiten.add(abschlussarbeit);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+        return abschlussarbeiten;
+    }
+
 
     //getAbschlussarbeit mit Parameter Status (mehrere zurückgeben)
 

@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<RecyclerViewAdapterAktiveArbeiten.ViewHolder>
+public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<RecyclerViewAdapterBetreuerUebersicht.ViewHolder>
 {
-    private ArrayList<Abschlussarbeit> mData;
+    private ArrayList<User> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapterAktiveArbeiten(Context context, ArrayList<Abschlussarbeit> data) {
+    RecyclerViewAdapterBetreuerUebersicht(Context context, ArrayList<User> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -26,25 +26,17 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerviewaktivearbeiten_row, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerviewbetreueruebersicht_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String Ueberschrift = mData.get(position).getUeberschrift();
-        holder.tvUeberschrift.setText(Ueberschrift);
-        holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
-        holder.tvStatus.setText(mData.get(position).getStatusName(mData.get(position).getStatus()));
-        //TODO hier muss in jedem Fall noch besser gelöst werden, wie Betreuer und Zweitgutachter aufgelöst werden
-        if(mData.get(position).getBetreuer() == 1)
-        {
-            holder.btnRolle.setText("Betreuer");
-        } else if (mData.get(position).getZweitgutachter() == 1)
-        {
-            holder.btnRolle.setText("Zweitgutachter");
-        }
+        String kompletterName = mData.get(position).getVorname() + " " + mData.get(position).getNachname();
+        holder.tvName.setText(kompletterName);
+        holder.tvAuslastung.setText(mData.get(position).getAuslastung());
+        holder.tvFachbereiche.setText(mData.get(position).getFachbereiche());
 
     }
 
@@ -57,21 +49,19 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvUeberschrift;
-        TextView tvKurzbeschreibung;
-        TextView tvStatus;
-        Button btnRolle;
+        TextView tvName;
+        TextView tvAuslastung;
+        TextView tvFachbereiche;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvUeberschrift = itemView.findViewById(R.id.tvAktiveArbeitenUeberschrift);
+            tvName = itemView.findViewById(R.id.betreuerName);
             itemView.setOnClickListener(this);
-            tvKurzbeschreibung = itemView.findViewById(R.id.betreuerFachbereiche);
+            tvAuslastung = itemView.findViewById(R.id.betreuerAuslastung);
             itemView.setOnClickListener(this);
-            tvStatus = itemView.findViewById(R.id.tvAktiveArbeitenStatus);
+            tvFachbereiche = itemView.findViewById(R.id.betreuerFachbereiche);
             itemView.setOnClickListener(this);
-            btnRolle = itemView.findViewById(R.id.btnAktiveArbeitenRolle);
-            itemView.setOnClickListener(this);
+
         }
 
         @Override
@@ -82,7 +72,7 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData.get(id).getUeberschrift();
+        return mData.get(id).getNachname();
     }
 
     // allows clicks events to be caught

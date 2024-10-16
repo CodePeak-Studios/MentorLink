@@ -40,6 +40,7 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
         holder.tvUeberschrift.setText(Ueberschrift);
         holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
         holder.tvStatus.setText(mData.get(position).getStatusName(mData.get(position).getStatus()));
+        //TODO hier muss in jedem Fall noch besser gelöst werden, wie Betreuer und Zweitgutachter aufgelöst werden
         if(mData.get(position).getBetreuer() == 1)
         {
             holder.btnRolle.setText("Betreuer");

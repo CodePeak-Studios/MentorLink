@@ -1,5 +1,6 @@
 package com.example.mentorlink;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +28,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
 
     RecyclerViewAdapter adapter;
     DBHandler dbHandler;
+    FloatingActionButton addFab;
 
 
 
@@ -39,10 +43,17 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             return insets;
         });
 
+        addFab = findViewById(R.id.fab_addVorschlag);
         dbHandler = new DBHandler(getApplicationContext());
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 1);
 
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), DetailAbschlussarbeit.class));
+            }
+        });
 
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeiten);
@@ -50,6 +61,8 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         adapter = new RecyclerViewAdapter(this, abschlussarbeiten);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+
+
     }
 
     @Override

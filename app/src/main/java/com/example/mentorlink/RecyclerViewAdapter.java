@@ -8,16 +8,16 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
 {
-    private List<String> mData;
+    private ArrayList<Abschlussarbeit> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapter(Context context, List<String> data) {
+    RecyclerViewAdapter(Context context, ArrayList<Abschlussarbeit> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -32,8 +32,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String ueberschrift = mData.get(position);
-        holder.myTextView.setText(ueberschrift);
+        String ueberschrift = mData.get(position).getUeberschrift();
+        holder.tvUeberschrift.setText(" " + ueberschrift + " ");
+        holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
     }
 
     // total number of rows
@@ -45,11 +46,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        TextView tvUeberschrift;
+        TextView tvKurzbeschreibung;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.tvAbschlussarbeitUeberschrift);
+            tvUeberschrift = itemView.findViewById(R.id.tvAbschlussarbeitUeberschrift);
+            itemView.setOnClickListener(this);
+            tvKurzbeschreibung = itemView.findViewById(R.id.tvAbschlussarbeitenKurzbeschreibung);
             itemView.setOnClickListener(this);
         }
 
@@ -61,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData.get(id);
+        return mData.get(id).getUeberschrift();
     }
 
     // allows clicks events to be caught

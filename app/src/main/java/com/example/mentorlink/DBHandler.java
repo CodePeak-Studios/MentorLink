@@ -182,7 +182,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 user.setNachname(cursor.getString(2));
                 user.setMail(cursor.getString(3));
                 user.setPasswort(cursor.getString(4));
-                user.setTeamsUser(cursor.getString(5));
+                user.setTeamsUser("");
                 user.setRolle(cursor.getInt(6));
                 user.setAuslastung(cursor.getInt(7));
                 user.setFachbereiche(cursor.getString(8));

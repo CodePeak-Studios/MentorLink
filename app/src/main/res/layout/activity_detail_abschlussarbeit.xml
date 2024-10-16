@@ -8,9 +8,19 @@
     tools:context=".DetailAbschlussarbeit">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvDetailAbschlussarbeitUeberschrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hier soll die Detail-Ansicht fuer Vorschläge und Abschlussarbeiten entstehen."
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Blockchain-Technologie"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@drawable/tv_roundedcorner"
+        android:padding="3dp"
         android:layout_margin="20dp"/>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

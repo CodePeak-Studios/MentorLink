@@ -28,6 +28,15 @@ public class Abschlussarbeit
         this.status = status;
     }
 
+    public Abschlussarbeit(int kategorie, String ueberschrift, String kurzbeschreibung, int betreuer, int status)
+    {
+        this.kategorie = kategorie;
+        this.ueberschrift = ueberschrift;
+        this.kurzbeschreibung = kurzbeschreibung;
+        this.betreuer = betreuer;
+        this.status = status;
+    }
+
     /**********************************************************************************************
      |                                         Getter                                              |
      **********************************************************************************************/

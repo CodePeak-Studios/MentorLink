@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHandler extends SQLiteOpenHelper {
 
     private static final String DB_Name = "MentorLinkDB";
@@ -106,13 +108,12 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /**********************************************************************************************
-     |                                 User Methoden                                              |
+     |                                 User Getter                                                |
      **********************************************************************************************/
 
     public User getUser() {
 
         User user = new User();
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + Table_FIRST + " LIMIT 1";
@@ -131,10 +132,102 @@ public class DBHandler extends SQLiteOpenHelper {
             user.setFachbereiche(cursor.getString(8));
 
             cursor.close();
-
         }
         return user;
     }
+
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachID(int userID) {
+
+        User user = new User();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " = " + userID + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user.setId(cursor.getInt(0));
+            user.setVorname(cursor.getString(1));
+            user.setNachname(cursor.getString(2));
+            user.setMail(cursor.getString(3));
+            user.setPasswort(cursor.getString(4));
+            user.setTeamsUser(cursor.getString(5));
+            user.setRolle(cursor.getInt(6));
+            user.setAuslastung(cursor.getInt(7));
+            user.setFachbereiche(cursor.getString(8));
+
+            cursor.close();
+        }
+        return user;
+    }
+
+    //alle User nach Rolle Filtern
+
+    public ArrayList<User> getUsersNachRolle(int rolle) {
+
+        ArrayList<User> users = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ROLLE + " = " + rolle;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(cursor.getInt(0));
+                user.setVorname(cursor.getString(1));
+                user.setNachname(cursor.getString(2));
+                user.setMail(cursor.getString(3));
+                user.setPasswort(cursor.getString(4));
+                user.setTeamsUser(cursor.getString(5));
+                user.setRolle(cursor.getInt(6));
+                user.setAuslastung(cursor.getInt(7));
+                user.setFachbereiche(cursor.getString(8));
+                users.add(user);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return users;
+    }
+
+    //alle User nach Fachbereiche Filtern
+
+    public ArrayList<User> getUsersNachFachbereich(String fachbereich) {
+
+        ArrayList<User> users = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_FACHBEREICHE + " = " + fachbereich;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(cursor.getInt(0));
+                user.setVorname(cursor.getString(1));
+                user.setNachname(cursor.getString(2));
+                user.setMail(cursor.getString(3));
+                user.setPasswort(cursor.getString(4));
+                user.setTeamsUser(cursor.getString(5));
+                user.setRolle(cursor.getInt(6));
+                user.setAuslastung(cursor.getInt(7));
+                user.setFachbereiche(cursor.getString(8));
+                users.add(user);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return users;
+    }
+
+    /**********************************************************************************************
+     |                                 User Update                                                |
+     **********************************************************************************************/
 
     public void updateUser(User user) {
 
@@ -156,13 +249,12 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     /**********************************************************************************************
-     |                                 Abschlussarbeiten Methoden                                 |
+     |                                 Abschlussarbeiten Getter                                   |
      **********************************************************************************************/
 
     public Abschlussarbeit getAbschlussarbeit() {
 
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + Table_SECOND + " LIMIT 1";
@@ -183,6 +275,160 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return abschlussarbeit;
     }
+
+    //getAbschlussarbeit mit Parameter UserID (einzeln und mehrere zurückgeben)
+
+    public Abschlussarbeit getAbschlussarbeitNachUserID(int userID) {
+
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND
+                + " WHERE " + col_STUDENT + " = " + userID
+                + " OR " + col_BETREUER + " = " + userID
+                + " OR " + col_ZWEITGUTACHTER + " = " + userID + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            abschlussarbeit.setId(cursor.getInt(0));
+            abschlussarbeit.setKategorie(cursor.getInt(1));
+            abschlussarbeit.setUeberschrift(cursor.getString(2));
+            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+            abschlussarbeit.setStudent(cursor.getInt(4));
+            abschlussarbeit.setBetreuer(cursor.getInt(5));
+            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+            abschlussarbeit.setStatus(cursor.getInt(7));
+
+            cursor.close();
+        }
+        return abschlussarbeit;
+    }
+
+    public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserID(int userID) {
+
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND
+                + " WHERE " + col_STUDENT + " = " + userID
+                + " OR " + col_BETREUER + " = " + userID
+                + " OR " + col_ZWEITGUTACHTER + " = " + userID;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+                abschlussarbeit.setId(cursor.getInt(0));
+                abschlussarbeit.setKategorie(cursor.getInt(1));
+                abschlussarbeit.setUeberschrift(cursor.getString(2));
+                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+                abschlussarbeit.setStudent(cursor.getInt(4));
+                abschlussarbeit.setBetreuer(cursor.getInt(5));
+                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+                abschlussarbeit.setStatus(cursor.getInt(7));
+                abschlussarbeiten.add(abschlussarbeit);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return abschlussarbeiten;
+    }
+
+    //getAbschlussarbeit mit nach Parameter userID und status (mehrere Abschlussarbeit)
+
+    public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserIDUndStatus(int userID, int status) {
+
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND
+                + " WHERE " + col_STUDENT + " = " + userID
+                + " OR " + col_BETREUER + " = " + userID
+                + " OR " + col_ZWEITGUTACHTER + " = " + userID
+                + " AND " + col_STATUS + " = " + status;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+                abschlussarbeit.setId(cursor.getInt(0));
+                abschlussarbeit.setKategorie(cursor.getInt(1));
+                abschlussarbeit.setUeberschrift(cursor.getString(2));
+                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+                abschlussarbeit.setStudent(cursor.getInt(4));
+                abschlussarbeit.setBetreuer(cursor.getInt(5));
+                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+                abschlussarbeit.setStatus(cursor.getInt(7));
+                abschlussarbeiten.add(abschlussarbeit);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+
+        }
+        return abschlussarbeiten;
+    }
+
+
+    //getAbschlussarbeit mit Parameter Status (mehrere zurückgeben)
+
+    public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachStatus(int status) {
+
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND + " WHERE " + col_STATUS + " = " + status;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+                abschlussarbeit.setId(cursor.getInt(0));
+                abschlussarbeit.setKategorie(cursor.getInt(1));
+                abschlussarbeit.setUeberschrift(cursor.getString(2));
+                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+                abschlussarbeit.setStudent(cursor.getInt(4));
+                abschlussarbeit.setBetreuer(cursor.getInt(5));
+                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+                abschlussarbeit.setStatus(cursor.getInt(7));
+                abschlussarbeiten.add(abschlussarbeit);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return abschlussarbeiten;
+    }
+
+    //getAbschlussarbeit mit Parameter Abschlussarbeit ID (einzelne Abschlussarbeit)
+
+    public Abschlussarbeit getAbschlussarbeitNachID(int id) {
+
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + Table_SECOND + " WHERE " + col_ID_ABSCHLUSSARBEITEN + " = " + id + " LIMIT 1";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            abschlussarbeit.setId(cursor.getInt(0));
+            abschlussarbeit.setKategorie(cursor.getInt(1));
+            abschlussarbeit.setUeberschrift(cursor.getString(2));
+            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
+            abschlussarbeit.setStudent(cursor.getInt(4));
+            abschlussarbeit.setBetreuer(cursor.getInt(5));
+            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
+            abschlussarbeit.setStatus(cursor.getInt(7));
+
+            cursor.close();
+        }
+        return abschlussarbeit;
+    }
+
+    /**********************************************************************************************
+     |                                 Abschlussarbeiten Update                                   |
+     **********************************************************************************************/
 
     public void updateAbschlussarbeit(Abschlussarbeit abschlussarbeit) {
 

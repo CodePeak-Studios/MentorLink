@@ -1,6 +1,9 @@
 package com.example.mentorlink;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +35,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String ueberschrift = mData.get(position).getUeberschrift();
-        holder.tvUeberschrift.setText(" " + ueberschrift + " ");
+        SpannableString str = new SpannableString(mData.get(position).getUeberschrift());
+
+        str.setSpan(new BackgroundColorSpan(Color.rgb(255, 167, 58)), 0, str.length(), 0);
+        holder.tvUeberschrift.setText(str);
         holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
     }
 

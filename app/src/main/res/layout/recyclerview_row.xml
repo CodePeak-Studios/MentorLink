@@ -17,9 +17,11 @@
         android:id="@+id/tvAbschlussarbeitUeberschrift"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:background="@color/orange"
+        android:backgroundTint="@color/orange"
         android:textColor="@color/black"/>
 
     <TextView
@@ -29,7 +31,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textSize="14sp"
+        android:textSize="15sp"
         />
 
     </LinearLayout>

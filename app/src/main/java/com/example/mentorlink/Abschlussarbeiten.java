@@ -40,26 +40,8 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         });
 
         dbHandler = new DBHandler(getApplicationContext());
-
-        //Sample-Daten, um die RV zu testen
-
-
-        Abschlussarbeit meineerste = dbHandler.getAbschlussarbeit();
-
-
-        Abschlussarbeit abschlussarbeit1 = new Abschlussarbeit(1, "Blockchain-Technologie", "Bli la blub", 2,1);
-        Abschlussarbeit abschlussarbeit2 = new Abschlussarbeit(2, "Cybersecurity und Datenschutz", "Die Kurzbeschreibung muss noch hinzugefügt werden.", 2,1);
-        Abschlussarbeit abschlussarbeit3 = new Abschlussarbeit(1, "Agile Softwareentwicklung", "Diese hier hat auch noch keine Beschreibung :O", 1,1);
-        Abschlussarbeit abschlussarbeit4 = new Abschlussarbeit(1, "KI und Maschinelles Lernen", "Den hier hat jemand wohl komplett vergessen. Sagt ja gar nix aus.", 2,1);
-        Abschlussarbeit abschlussarbeit5 = new Abschlussarbeit(2, "Internet of the Dinge", "Mist, das geht hier so weiter.", 3,1);
-
-
-        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
-        abschlussarbeiten.add(abschlussarbeit1);
-        abschlussarbeiten.add(abschlussarbeit2);
-        abschlussarbeiten.add(abschlussarbeit3);
-        abschlussarbeiten.add(abschlussarbeit4);
-        abschlussarbeiten.add(abschlussarbeit5);
+        
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 1);
 
 
         //RecyclerView erstellen

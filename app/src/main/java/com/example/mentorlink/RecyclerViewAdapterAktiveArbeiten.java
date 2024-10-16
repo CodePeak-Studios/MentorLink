@@ -1,6 +1,9 @@
 package com.example.mentorlink;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +69,7 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
             super(itemView);
             tvUeberschrift = itemView.findViewById(R.id.tvAktiveArbeitenUeberschrift);
             itemView.setOnClickListener(this);
-            tvKurzbeschreibung = itemView.findViewById(R.id.betreuerFachbereiche);
+            tvKurzbeschreibung = itemView.findViewById(R.id.tvAktiveArbeitenKurzbeschreibung);
             itemView.setOnClickListener(this);
             tvStatus = itemView.findViewById(R.id.tvAktiveArbeitenStatus);
             itemView.setOnClickListener(this);

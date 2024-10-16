@@ -35,7 +35,7 @@ public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<
     public void onBindViewHolder(ViewHolder holder, int position) {
         String kompletterName = mData.get(position).getVorname() + " " + mData.get(position).getNachname();
         holder.tvName.setText(kompletterName);
-        holder.tvAuslastung.setText(mData.get(position).getAuslastung());
+        holder.tvAuslastung.setText(String.valueOf((mData.get(position).getAuslastung())));
         holder.tvFachbereiche.setText(mData.get(position).getFachbereiche());
 
     }

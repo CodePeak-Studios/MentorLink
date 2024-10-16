@@ -32,6 +32,7 @@ public class BetreuerUebersicht extends AppCompatActivity {
 
         ArrayList<User> users = dbHandler.getUsersNachRolle(1);
 
+
         RecyclerView recyclerView = findViewById(R.id.rvBetreuerUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapterBetreuerUebersicht(this, users);

@@ -7,6 +7,7 @@ import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerviewaktivearbeiten_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,6 +39,15 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
         String Ueberschrift = mData.get(position).getUeberschrift();
         holder.tvUeberschrift.setText(Ueberschrift);
         holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
+        holder.tvStatus.setText(mData.get(position).getStatusName(mData.get(position).getStatus()));
+        if(mData.get(position).getBetreuer() == 1)
+        {
+            holder.btnRolle.setText("Betreuer");
+        } else if (mData.get(position).getZweitgutachter() == 1)
+        {
+            holder.btnRolle.setText("Zweitgutachter");
+        }
+
     }
 
     // total number of rows
@@ -51,12 +61,18 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvUeberschrift;
         TextView tvKurzbeschreibung;
+        TextView tvStatus;
+        Button btnRolle;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvUeberschrift = itemView.findViewById(R.id.tvAbschlussarbeitUeberschrift);
+            tvUeberschrift = itemView.findViewById(R.id.tvAktiveArbeitenUeberschrift);
             itemView.setOnClickListener(this);
-            tvKurzbeschreibung = itemView.findViewById(R.id.tvAbschlussarbeitenKurzbeschreibung);
+            tvKurzbeschreibung = itemView.findViewById(R.id.tvAktiveArbeitenKurzbeschreibung);
+            itemView.setOnClickListener(this);
+            tvStatus = itemView.findViewById(R.id.tvAktiveArbeitenStatus);
+            itemView.setOnClickListener(this);
+            btnRolle = itemView.findViewById(R.id.btnAktiveArbeitenRolle);
             itemView.setOnClickListener(this);
         }
 

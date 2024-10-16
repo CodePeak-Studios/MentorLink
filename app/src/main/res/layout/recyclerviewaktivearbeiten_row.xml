@@ -40,22 +40,22 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnAktiveArbeitenRolle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:textSize="32sp"
-                android:text="Zweitgutachter"
+                android:textSize="18sp"
                 android:textColor="@color/black"
                 android:backgroundTint="@color/green"
                 />
 
             <TextView
+                android:id="@+id/tvAktiveArbeitenStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textSize="32sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:text="Rechnung beglichen"
                 />
 
         </LinearLayout>

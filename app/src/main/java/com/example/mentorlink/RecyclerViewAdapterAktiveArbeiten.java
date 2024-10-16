@@ -35,10 +35,8 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SpannableString str = new SpannableString(mData.get(position).getUeberschrift());
-
-        str.setSpan(new BackgroundColorSpan(Color.rgb(255, 167, 58)), 0, str.length(), 0);
-        holder.tvUeberschrift.setText(str);
+        String Ueberschrift = mData.get(position).getUeberschrift();
+        holder.tvUeberschrift.setText(Ueberschrift);
         holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
     }
 

@@ -170,9 +170,9 @@ public class DBHandler extends SQLiteOpenHelper {
         User user = new User();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String mailForQuery = email;
+        String mailForQuery = "'" + email + "'";
 
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + email + " LIMIT 1";
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
 
         Cursor cursor = db.rawQuery(query, null);
 

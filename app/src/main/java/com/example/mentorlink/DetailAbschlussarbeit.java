@@ -84,7 +84,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    User user = dbHandler.getUserNachMail("'" + tvDetailAbschlussarbeitZweitgutachterMail.getText().toString() + "'");
+                    User user = dbHandler.getUserNachMail(tvDetailAbschlussarbeitZweitgutachterMail.getText().toString());
                     tvDetailAbschlussarbeitZweitgutachterName.setText(user.getVorname() + " " + user.getNachname());
                 }
                 catch (Exception e)

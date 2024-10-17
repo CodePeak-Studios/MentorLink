@@ -93,7 +93,22 @@ public class DetailAbschlussarbeit extends AppCompatActivity {
                             "\n Der User konnte anscheinend nicht aus der DB zugeordnet werden.",
                             Toast.LENGTH_LONG).show();
                 }
+            }
+        });
 
+        btnSearchStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    User user = dbHandler.getUserNachMail(tvDetailAbschlussarbeitStudentMail.getText().toString());
+                    tvDetailAbschlussarbeitStudentName.setText(user.getVorname() + " " + user.getNachname());
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), e.getMessage() +
+                                    "\n Der User konnte anscheinend nicht aus der DB zugeordnet werden.",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 

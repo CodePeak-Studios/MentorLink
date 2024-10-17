@@ -17,7 +17,8 @@
             android:exported="false" />
         <activity
             android:name=".DetailAbschlussarbeit"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AktiveArbeiten"
             android:exported="false" />

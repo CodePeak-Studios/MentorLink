@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import kotlinx.coroutines.flow.internal.AbstractSharedFlow;
+
 public class Abschlussarbeiten extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
 
     RecyclerViewAdapter adapter;
@@ -51,7 +53,9 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), DetailAbschlussarbeit.class));
+                Intent intentNeuerVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
+                intentNeuerVorschlag.putExtra("idUser", 1);
+                startActivity(intentNeuerVorschlag);
             }
         });
 
@@ -59,14 +63,20 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeiten);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapter(this, abschlussarbeiten);
-        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
-
+        adapter.setClickListener(this);
 
     }
 
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
+        Abschlussarbeit clicked = adapter.getItem(position);
+
+        Intent intentBestehenderVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
+        intentBestehenderVorschlag.putExtra("idUser", 1);
+        intentBestehenderVorschlag.putExtra("AbschlussarbeitId", clicked.getId());
+        startActivity(intentBestehenderVorschlag);
     }
 }

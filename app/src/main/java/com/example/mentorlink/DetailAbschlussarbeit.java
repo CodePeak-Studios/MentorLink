@@ -58,30 +58,6 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAbschlussarbeitStudentName);
 
 
-        String[] arrKat = new String[]
-                {
-                    IKonstanten.KAT_ARCBAU,
-                    IKonstanten.KAT_DESMED,
-                    IKonstanten.KAT_GESSOZ,
-                    IKonstanten.KAT_ITTEC,
-                    IKonstanten.KAT_MARKOM,
-                    IKonstanten.KAT_PERREC,
-                    IKonstanten.KAT_PAEPSY,
-                    IKonstanten.KAT_TOUHOS,
-                    IKonstanten.KAT_WIRMAN
-                };
-        String[] arrStat = new String[] {"in Bearbeitung"};
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arrKat);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnDetailAbschlussarbeitKategorie.setAdapter(adapter1);
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arrStat);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnDetailAbschlussarbeitStatus.setAdapter(adapter2);
-
         Intent intentVonVorschlaege = getIntent();
 
         intentIdUser = intentVonVorschlaege.getIntExtra("idUser", -1);
@@ -120,5 +96,41 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             }
         });
 
+        //Spinner werden mit vorgegebene Werten aus dem Interface belegt
+        String[] arrKat = new String[]
+                {
+                        IKonstanten.KAT_ARCBAU,
+                        IKonstanten.KAT_DESMED,
+                        IKonstanten.KAT_GESSOZ,
+                        IKonstanten.KAT_ITTEC,
+                        IKonstanten.KAT_MARKOM,
+                        IKonstanten.KAT_PERREC,
+                        IKonstanten.KAT_PAEPSY,
+                        IKonstanten.KAT_TOUHOS,
+                        IKonstanten.KAT_WIRMAN
+                };
+        String[] arrStat = new String[]
+                {
+                        IKonstanten.STAT_OFFEN,
+                        IKonstanten.STAT_IN_ABSTIMMUNG,
+                        IKonstanten.STAT_ANGEMELDET,
+                        IKonstanten.STAT_IN_BEARBEITUNG,
+                        IKonstanten.STAT_ABGEGEBEN,
+                        IKonstanten.STAT_IN_KORREKTUR,
+                        IKonstanten.STAT_KOLLOQ_TERMINIERT,
+                        IKonstanten.STAT_KOLLOQ_BEENDET,
+                        IKonstanten.STAT_RECHNUNG_GESTELLT,
+                        IKonstanten.STAT_RECHNUNG_BEGLICHEN
+                };
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arrKat);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnDetailAbschlussarbeitKategorie.setAdapter(adapter1);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arrStat);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnDetailAbschlussarbeitStatus.setAdapter(adapter2);
     }
 }

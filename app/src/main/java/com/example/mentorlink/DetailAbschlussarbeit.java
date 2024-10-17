@@ -129,7 +129,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             }
         });
 
-        //TODO Methode, um Kategorie und Status in die ints umzuwandeln
+        
         //Pruefen, ob benoetigte Felder ausgefuellt wurden
         btnDetailAbschlussarbeitSpeichern.setOnClickListener(new View.OnClickListener() {
             @Override

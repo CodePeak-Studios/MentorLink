@@ -196,4 +196,79 @@ public class Abschlussarbeit
         }
         return statusName;
     }
+
+    public void setKategorie(String kategorieName)
+    {
+        switch(kategorieName)
+        {
+            case "Architektur & Bau":
+                this.kategorie = 1;
+                break;
+            case "Design & Medien":
+                this.kategorie = 2;
+                break;
+            case "Gesundheit & Soziales":
+                this.kategorie = 3;
+                break;
+            case "IT & Technik":
+                this.kategorie = 4;
+                break;
+            case "Marketing & Kommunikation":
+                this.kategorie = 5;
+                break;
+            case "Personal & Recht":
+                this.kategorie = 6;
+                break;
+            case "Pädagogik & Psychologie":
+                this.kategorie = 7;
+                break;
+            case "Tourismus & Hospitality":
+                this.kategorie = 8;
+                break;
+            case "Wirtschaft & Management":
+                this.kategorie = 9;
+                break;
+            default:
+                this.kategorie = -1;
+        }
+    }
+
+    public void setStatus(String statusName)
+    {
+        switch(statusName)
+        {
+            case "Offen":
+                this.status = 1;
+                break;
+            case "in Abstimmung":
+                this.status = 2;
+                break;
+            case "Angemeldet":
+                this.status = 3;
+                break;
+            case "in Bearbeitung":
+                this.status = 4;
+                break;
+            case "Abgegeben":
+                this.status = 5;
+                break;
+            case "in Korrektur":
+                this.status = 6;
+                break;
+            case "Kolloquium terminiert":
+                this.status = 7;
+                break;
+            case "Kolloquium beendet":
+                this.status = 8;
+                break;
+            case "Rechnung gestellt":
+                this.status = 9;
+                break;
+            case "Rechnung beglichen":
+                this.status = 10;
+                break;
+            default:
+                this.status = -1;
+        }
+    }
 }

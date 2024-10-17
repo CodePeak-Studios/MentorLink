@@ -68,9 +68,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id).getUeberschrift();
+    // Gibt Abschlussarbeit an Position au
+    Abschlussarbeit getItem(int id) {
+        return mData.get(id);
     }
 
     // allows clicks events to be caught

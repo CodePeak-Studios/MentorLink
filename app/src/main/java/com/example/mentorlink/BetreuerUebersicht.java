@@ -1,6 +1,9 @@
 package com.example.mentorlink;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class BetreuerUebersicht extends AppCompatActivity {
+public class BetreuerUebersicht extends AppCompatActivity implements RecyclerViewAdapterBetreuerUebersicht.ItemClickListener {
 
     RecyclerViewAdapterBetreuerUebersicht adapter;
     DBHandler dbHandler;
@@ -36,7 +39,18 @@ public class BetreuerUebersicht extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rvBetreuerUebersicht);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapterBetreuerUebersicht(this, users);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
     }
+
+    //OnItemClick um auf die DetailBetreuer Seite zu kommen, wenn man auf einen User klickt.
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(this, DetailBetreuer.class);
+        intent.putExtra("betreuerID", position);
+        startActivity(intent);
+    }
+
+
 }

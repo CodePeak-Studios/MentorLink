@@ -1,6 +1,9 @@
 package com.example.mentorlink;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<RecyclerViewAdapterBetreuerUebersicht.ViewHolder>
+public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<RecyclerViewAdapterBetreuerProfil.ViewHolder>
 {
-    private ArrayList<User> mData;
+    private ArrayList<Abschlussarbeit> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapterBetreuerUebersicht(Context context, ArrayList<User> data) {
+    RecyclerViewAdapterBetreuerProfil(Context context, ArrayList<Abschlussarbeit> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -26,25 +29,18 @@ public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.recyclerviewbetreueruebersicht_row, parent, false);
+        View view = mInflater.inflate(R.layout.recyclerviewbetreuerprofil_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String kompletterName = mData.get(position).getVorname() + " " + mData.get(position).getNachname();
-        holder.tvName.setText(kompletterName);
-        holder.tvAuslastung.setText(mData.get(position).getAuslastungsString(mData.get(position).getAuslastung()));
-        if (mData.get(position).getAuslastung() == 0) {
-            holder.tvAuslastung.setTextColor(holder.tvAuslastung.getResources().getColor(R.color.darkGreen));
-        } else if (mData.get(position).getAuslastung() == 1) {
-            holder.tvAuslastung.setTextColor(holder.tvAuslastung.getResources().getColor(R.color.orange));
-        } else if (mData.get(position).getAuslastung() == 2) {
-            holder.tvAuslastung.setTextColor(holder.tvAuslastung.getResources().getColor(R.color.darkRot));
-        }
-        holder.tvFachbereiche.setText(mData.get(position).getFachbereiche());
+        SpannableString str = new SpannableString(mData.get(position).getUeberschrift());
 
+        str.setSpan(new BackgroundColorSpan(Color.rgb(255, 167, 58)), 0, str.length(), 0);
+        holder.tvUeberschriftBP.setText(str);
+        holder.tvKurzbeschreibungBP.setText(mData.get(position).getKurzbeschreibung());
     }
 
     // total number of rows
@@ -56,19 +52,18 @@ public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvName;
-        TextView tvAuslastung;
-        TextView tvFachbereiche;
+        TextView tvUeberschriftBP;
+        TextView tvKurzbeschreibungBP;
+        Button btnAuswaehlen;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.betreuerName);
+            tvUeberschriftBP = itemView.findViewById(R.id.tvAbschlussarbeitUeberschriftBP);
             itemView.setOnClickListener(this);
-            tvAuslastung = itemView.findViewById(R.id.betreuerAuslastung);
+            tvKurzbeschreibungBP = itemView.findViewById(R.id.tvAbschlussarbeitenKurzbeschreibungBP);
             itemView.setOnClickListener(this);
-            tvFachbereiche = itemView.findViewById(R.id.betreuerFachbereiche);
+            btnAuswaehlen = itemView.findViewById(R.id.btnBetreuerProfilAuswaehlen);
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -79,7 +74,7 @@ public class RecyclerViewAdapterBetreuerUebersicht extends RecyclerView.Adapter<
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData.get(id).getNachname();
+        return mData.get(id).getUeberschrift();
     }
 
     // allows clicks events to be caught

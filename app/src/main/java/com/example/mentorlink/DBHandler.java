@@ -499,7 +499,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         values.put(col_KATEGORIE, abschlussarbeit.getKategorie());
         values.put(col_UEBERSCHRIFT, abschlussarbeit.getUeberschrift());
-        values.put(col_FACHBEREICHE, abschlussarbeit.getKurzbeschreibung());
+        values.put(col_KURZBESCHREIBUNG, abschlussarbeit.getKurzbeschreibung());
         values.put(col_STUDENT, abschlussarbeit.getStudent());
         values.put(col_BETREUER, abschlussarbeit.getBetreuer());
         values.put(col_ZWEITGUTACHTER, abschlussarbeit.getZweitgutachter());

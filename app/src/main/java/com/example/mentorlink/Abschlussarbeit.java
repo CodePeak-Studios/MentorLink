@@ -197,85 +197,78 @@ public class Abschlussarbeit
         return statusName;
     }
 
-    public int setKategorie(String kategorieName)
+    public void setKategorie(String kategorieName)
     {
-        int kategorieId;
-
         switch(kategorieName)
         {
             case "Architektur & Bau":
-                kategorieId = 1;
+                this.kategorie = 1;
                 break;
             case "Design & Medien":
-                kategorieId = 2;
+                this.kategorie = 2;
                 break;
             case "Gesundheit & Soziales":
-                kategorieId = 3;
+                this.kategorie = 3;
                 break;
             case "IT & Technik":
-                kategorieId = 4;
+                this.kategorie = 4;
                 break;
             case "Marketing & Kommunikation":
-                kategorieId = 5;
+                this.kategorie = 5;
                 break;
             case "Personal & Recht":
-                kategorieId = 6;
+                this.kategorie = 6;
                 break;
             case "Pädagogik & Psychologie":
-                kategorieId = 7;
+                this.kategorie = 7;
                 break;
             case "Tourismus & Hospitality":
-                kategorieId = 8;
+                this.kategorie = 8;
                 break;
             case "Wirtschaft & Management":
-                kategorieId = 9;
+                this.kategorie = 9;
                 break;
             default:
-                kategorieId = -1;
+                this.kategorie = -1;
         }
-        return kategorieId;
     }
 
-    public int setStatus(String statusName)
+    public void setStatus(String statusName)
     {
-        int statusId;
-
         switch(statusName)
         {
             case "Offen":
-                statusId = 1;
+                this.status = 1;
                 break;
             case "in Abstimmung":
-                statusId = 2;
+                this.status = 2;
                 break;
             case "Angemeldet":
-                statusId = 3;
+                this.status = 3;
                 break;
             case "in Bearbeitung":
-                statusId = 4;
+                this.status = 4;
                 break;
             case "Abgegeben":
-                statusId = 5;
+                this.status = 5;
                 break;
             case "in Korrektur":
-                statusId = 6;
+                this.status = 6;
                 break;
             case "Kolloquium terminiert":
-                statusId = 7;
+                this.status = 7;
                 break;
             case "Kolloquium beendet":
-                statusId = 8;
+                this.status = 8;
                 break;
             case "Rechnung gestellt":
-                statusId = 9;
+                this.status = 9;
                 break;
             case "Rechnung beglichen":
-                statusId = 10;
+                this.status = 10;
                 break;
             default:
-                statusId = -1;
+                this.status = -1;
         }
-        return statusId;
     }
-
 }

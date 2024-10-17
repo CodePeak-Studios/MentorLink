@@ -34,6 +34,8 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private EditText edtDetailAbschlussarbeitKurzbeschreibung;
 
     private TextView tvDetailAbschlussarbeitUeberschrift;
+    private TextView tvDetailAbschlussarbeitBetreuer;
+
 
 
 
@@ -69,6 +71,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         btnDetailAbschlussarbeitLöschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
         edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
         tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAbschlussarbeitUeberschrift);
+        tvDetailAbschlussarbeitBetreuer = findViewById(R.id.tvDetailAbschlussarbeitBetreuerName);
 
 
         Intent intentVonVorschlaege = getIntent();
@@ -85,6 +88,13 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         }
 
         tvDetailAbschlussarbeitUeberschrift.setText(geladeneAbschlussarbeit.getUeberschrift());
+        edtDetailAbschlussarbeitKurzbeschreibung.setText(geladeneAbschlussarbeit.getKurzbeschreibung());
+        spnDetailAbschlussarbeitKategorie.setSelection(geladeneAbschlussarbeit.getKategorie());
+        spnDetailAbschlussarbeitStatus.setSelection(geladeneAbschlussarbeit.getStatus());
+        tvDetailAbschlussarbeitBetreuer.setText(dbHandler.getUserNachID(geladeneAbschlussarbeit.getBetreuer()).getVorname()
+                + " " + dbHandler.getUserNachID(geladeneAbschlussarbeit.getBetreuer()).getNachname());
+        edtDetailAbschlussarbeitZweitgutachterMail.setText((dbHandler.getUserNachID(geladeneAbschlussarbeit.getZweitgutachter())).getMail());
+        edtDetailAbschlussarbeitStudentMail.setText((dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent())).getMail());
 
 
         btnSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +134,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         btnDetailAbschlussarbeitSpeichern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((edtDetailAbschlussarbeitKurzbeschreibung.getText().toString().isEmpty()) ||
-                        (edtDetailAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty()) ||
-                        (edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
+                if(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString().isEmpty())
                 {
                     Toast.makeText(getApplicationContext(), "Es wurden nicht alle benoetigten Felder ausgefüllt.", Toast.LENGTH_LONG).show();
                 }
@@ -141,15 +149,26 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                     {
                         updateAbschlussarbeit.setZweitgutachter(dbHandler.getUserNachMail(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString()).getId());
                     }
-                    else{updateAbschlussarbeit.setZweitgutachter(geladeneAbschlussarbeit.getZweitgutachter());}
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getZweitgutachter() == 0)){updateAbschlussarbeit.setZweitgutachter(geladeneAbschlussarbeit.getZweitgutachter());}
+                        else {updateAbschlussarbeit.setZweitgutachter(0);}
+                    }
                     if(!(edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
                     {
                         updateAbschlussarbeit.setStudent(dbHandler.getUserNachMail(edtDetailAbschlussarbeitStudentMail.getText().toString()).getId());
                     }
-                    else {updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getStudent() == 0)){updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
+                        else {updateAbschlussarbeit.setStudent(0);}
+                    }
+
                     updateAbschlussarbeit.setKategorie(spnDetailAbschlussarbeitKategorie.getSelectedItem().toString());
                     updateAbschlussarbeit.setStatus(spnDetailAbschlussarbeitStatus.getSelectedItem().toString());
                     dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
+                    Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    startActivity(intent);
                 }
             }
         });

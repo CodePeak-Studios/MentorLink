@@ -16,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.w3c.dom.Text;
+
 public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstanten {
 
 
@@ -30,6 +32,8 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private Button btnDetailAbschlussarbeitSpeichern;
     private Button btnDetailAbschlussarbeitLöschen;
     private EditText edtDetailAbschlussarbeitKurzbeschreibung;
+
+    private TextView tvDetailAbschlussarbeitUeberschrift;
 
 
 
@@ -64,6 +68,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         btnDetailAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailAbschlussarbeit);
         btnDetailAbschlussarbeitLöschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
         edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
+        tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAbschlussarbeitUeberschrift);
 
 
         Intent intentVonVorschlaege = getIntent();
@@ -79,6 +84,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             Toast.makeText(getApplicationContext(), "Es gab einen Fehler beim Laden des Vorschlages.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+        tvDetailAbschlussarbeitUeberschrift.setText(geladeneAbschlussarbeit.getUeberschrift());
 
 
         btnSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +149,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                     else {updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
                     updateAbschlussarbeit.setKategorie(spnDetailAbschlussarbeitKategorie.getSelectedItem().toString());
                     updateAbschlussarbeit.setStatus(spnDetailAbschlussarbeitStatus.getSelectedItem().toString());
+                    dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
                 }
             }
         });

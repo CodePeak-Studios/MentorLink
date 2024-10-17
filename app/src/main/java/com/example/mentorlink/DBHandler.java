@@ -163,6 +163,35 @@ public class DBHandler extends SQLiteOpenHelper {
         return user;
     }
 
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachMail(String email) {
+
+        User user = new User();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String mailForQuery = email;
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + email + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user.setId(cursor.getInt(0));
+            user.setVorname(cursor.getString(1));
+            user.setNachname(cursor.getString(2));
+            user.setMail(cursor.getString(3));
+            user.setPasswort(cursor.getString(4));
+            user.setTeamsUser(cursor.getString(5));
+            user.setRolle(cursor.getInt(6));
+            user.setAuslastung(cursor.getInt(7));
+            user.setFachbereiche(cursor.getString(8));
+
+            cursor.close();
+        }
+        return user;
+    }
+
     //alle User nach Rolle Filtern
 
     public ArrayList<User> getUsersNachRolle(int rolle) {

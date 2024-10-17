@@ -1,12 +1,12 @@
 package com.example.mentorlink;
 
-public class IKonstanten
+public interface IKonstanten
 {
     /**********************************************************************************************
      |                                         Kategorien                                          |
      **********************************************************************************************/
 
-    public static final String KAT_WISO = "Architektur & Bau";
+    public static final String KAT_ARCBAU = "Architektur & Bau";
     public static final String KAT_DESMED = "Design & Medien";
     public static final String KAT_GESSOZ = "Gesundheit & Soziales";
     public static final String KAT_ITTEC = "IT & Technik";

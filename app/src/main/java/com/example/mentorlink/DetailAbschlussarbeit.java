@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class DetailAbschlussarbeit extends AppCompatActivity {
+public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstanten {
 
 
     private Spinner spnDetailAbschlussarbeitKategorie;
@@ -58,10 +58,18 @@ public class DetailAbschlussarbeit extends AppCompatActivity {
         tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAbschlussarbeitStudentName);
 
 
-
-
-
-        String[] arrKat = new String[] {"Wirtschaft & Soziales"};
+        String[] arrKat = new String[]
+                {
+                    IKonstanten.KAT_ARCBAU,
+                    IKonstanten.KAT_DESMED,
+                    IKonstanten.KAT_GESSOZ,
+                    IKonstanten.KAT_ITTEC,
+                    IKonstanten.KAT_MARKOM,
+                    IKonstanten.KAT_PERREC,
+                    IKonstanten.KAT_PAEPSY,
+                    IKonstanten.KAT_TOUHOS,
+                    IKonstanten.KAT_WIRMAN
+                };
         String[] arrStat = new String[] {"in Bearbeitung"};
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,

@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtDetailAbschlussarbeitUeberschrift"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:editable="false"
@@ -201,7 +201,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                android:id="@+id/tvDetailAbschlussarbeitZweitgutachterMail"
+                android:id="@+id/edtDetailAbschlussarbeitZweitgutachterMail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="200dp"
@@ -272,7 +272,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                android:id="@+id/tvDetailAbschlussarbeitStudentMail"
+                android:id="@+id/edtDetailAbschlussarbeitStudentMail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="200dp"
@@ -284,7 +284,33 @@
     </LinearLayout>
 
 
+    <Button
+        android:id="@+id/btnLoeschenDetailAbschlussarbeit"
+        android:layout_width="wrap_content"
+        android:minWidth="115dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailAbschlussarbeitStudent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnSpeichernDetailAbschlussarbeit"
+        android:backgroundTint="@color/buttonBlau"
+        android:text="Löschen"
 
+        />
+
+    <Button
+        android:id="@+id/btnSpeichernDetailAbschlussarbeit"
+        android:layout_width="wrap_content"
+        android:minWidth="115dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailAbschlussarbeitStudent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnLoeschenDetailAbschlussarbeit"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/buttonBlau"
+        android:text="Speichern"
+
+        />
 
 
 

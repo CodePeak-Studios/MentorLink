@@ -196,4 +196,86 @@ public class Abschlussarbeit
         }
         return statusName;
     }
+
+    public int setKategorie(String kategorieName)
+    {
+        int kategorieId;
+
+        switch(kategorieName)
+        {
+            case "Architektur & Bau":
+                kategorieId = 1;
+                break;
+            case "Design & Medien":
+                kategorieId = 2;
+                break;
+            case "Gesundheit & Soziales":
+                kategorieId = 3;
+                break;
+            case "IT & Technik":
+                kategorieId = 4;
+                break;
+            case "Marketing & Kommunikation":
+                kategorieId = 5;
+                break;
+            case "Personal & Recht":
+                kategorieId = 6;
+                break;
+            case "Pädagogik & Psychologie":
+                kategorieId = 7;
+                break;
+            case "Tourismus & Hospitality":
+                kategorieId = 8;
+                break;
+            case "Wirtschaft & Management":
+                kategorieId = 9;
+                break;
+            default:
+                kategorieId = -1;
+        }
+        return kategorieId;
+    }
+
+    public int setStatus(String statusName)
+    {
+        int statusId;
+
+        switch(statusName)
+        {
+            case "Offen":
+                statusId = 1;
+                break;
+            case "in Abstimmung":
+                statusId = 2;
+                break;
+            case "Angemeldet":
+                statusId = 3;
+                break;
+            case "in Bearbeitung":
+                statusId = 4;
+                break;
+            case "Abgegeben":
+                statusId = 5;
+                break;
+            case "in Korrektur":
+                statusId = 6;
+                break;
+            case "Kolloquium terminiert":
+                statusId = 7;
+                break;
+            case "Kolloquium beendet":
+                statusId = 8;
+                break;
+            case "Rechnung gestellt":
+                statusId = 9;
+                break;
+            case "Rechnung beglichen":
+                statusId = 10;
+                break;
+            default:
+                statusId = -1;
+        }
+        return statusId;
+    }
+
 }

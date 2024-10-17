@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +23,13 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private Spinner spnDetailAbschlussarbeitStatus;
     private Button btnSearchZweitgutachter;
     private Button btnSearchStudent;
-    private TextView tvDetailAbschlussarbeitZweitgutachterMail;
+    private TextView edtDetailAbschlussarbeitZweitgutachterMail;
     private TextView tvDetailAbschlussarbeitZweitgutachterName;
-    private TextView tvDetailAbschlussarbeitStudentMail;
+    private TextView edtDetailAbschlussarbeitStudentMail;
     private TextView tvDetailAbschlussarbeitStudentName;
+    private Button btnDetailAbschlussarbeitSpeichern;
+    private Button btnDetailAbschlussarbeitLöschen;
+    private EditText edtDetailAbschlussarbeitKurzbeschreibung;
 
 
 
@@ -33,6 +37,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
 
     private int intentIdUser;
     private int intentAbschlussarbeit;
+    private Abschlussarbeit geladeneAbschlussarbeit;
 
 
 
@@ -52,10 +57,13 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         btnSearchZweitgutachter = findViewById(R.id.btnSearchZweitgutachterDetailAbschlussarbeiten);
         btnSearchStudent = findViewById(R.id.btnSearchStudentDetailAbschlussarbeiten);
         dbHandler = new DBHandler(getApplicationContext());
-        tvDetailAbschlussarbeitZweitgutachterMail = findViewById(R.id.tvDetailAbschlussarbeitZweitgutachterMail);
+        edtDetailAbschlussarbeitZweitgutachterMail = findViewById(R.id.edtDetailAbschlussarbeitZweitgutachterMail);
         tvDetailAbschlussarbeitZweitgutachterName = findViewById(R.id.tvDetailAbschlussarbeitZweitgutachterName);
-        tvDetailAbschlussarbeitStudentMail = findViewById(R.id.tvDetailAbschlussarbeitStudentMail);
+        edtDetailAbschlussarbeitStudentMail = findViewById(R.id.edtDetailAbschlussarbeitStudentMail);
         tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAbschlussarbeitStudentName);
+        btnDetailAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailAbschlussarbeit);
+        btnDetailAbschlussarbeitLöschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
+        edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
 
 
         Intent intentVonVorschlaege = getIntent();
@@ -63,12 +71,21 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         intentIdUser = intentVonVorschlaege.getIntExtra("idUser", -1);
         intentAbschlussarbeit = intentVonVorschlaege.getIntExtra("AbschlussarbeitId", -1);
 
+        try {
+            geladeneAbschlussarbeit = dbHandler.getAbschlussarbeitNachID(intentAbschlussarbeit);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(), "Es gab einen Fehler beim Laden des Vorschlages.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+
 
         btnSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    User user = dbHandler.getUserNachMail(tvDetailAbschlussarbeitZweitgutachterMail.getText().toString());
+                    User user = dbHandler.getUserNachMail(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString());
                     tvDetailAbschlussarbeitZweitgutachterName.setText(user.getVorname() + " " + user.getNachname());
                 }
                 catch (Exception e)
@@ -84,7 +101,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             @Override
             public void onClick(View v) {
                 try {
-                    User user = dbHandler.getUserNachMail(tvDetailAbschlussarbeitStudentMail.getText().toString());
+                    User user = dbHandler.getUserNachMail(edtDetailAbschlussarbeitStudentMail.getText().toString());
                     tvDetailAbschlussarbeitStudentName.setText(user.getVorname() + " " + user.getNachname());
                 }
                 catch (Exception e)
@@ -92,6 +109,40 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                     Toast.makeText(getApplicationContext(), e.getMessage() +
                                     "\n Der User konnte anscheinend nicht aus der DB zugeordnet werden.",
                             Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        //TODO Methode, um Kategorie und Status in die ints umzuwandeln
+        //Pruefen, ob benoetigte Felder ausgefuellt wurden
+        btnDetailAbschlussarbeitSpeichern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((edtDetailAbschlussarbeitKurzbeschreibung.getText().toString().isEmpty()) ||
+                        (edtDetailAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty()) ||
+                        (edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
+                {
+                    Toast.makeText(getApplicationContext(), "Es wurden nicht alle benoetigten Felder ausgefüllt.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Abschlussarbeit updateAbschlussarbeit = new Abschlussarbeit();
+                    updateAbschlussarbeit.setId(geladeneAbschlussarbeit.getId());
+                    updateAbschlussarbeit.setUeberschrift(geladeneAbschlussarbeit.getUeberschrift());
+                    updateAbschlussarbeit.setBetreuer(geladeneAbschlussarbeit.getBetreuer());
+                    updateAbschlussarbeit.setKurzbeschreibung(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString());
+                    if(!(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setZweitgutachter(dbHandler.getUserNachMail(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString()).getId());
+                    }
+                    else{updateAbschlussarbeit.setZweitgutachter(geladeneAbschlussarbeit.getZweitgutachter());}
+                    if(!(edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setStudent(dbHandler.getUserNachMail(edtDetailAbschlussarbeitStudentMail.getText().toString()).getId());
+                    }
+                    else {updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
+                    updateAbschlussarbeit.setKategorie(spnDetailAbschlussarbeitKategorie.getSelectedItem().toString());
+                    updateAbschlussarbeit.setStatus(spnDetailAbschlussarbeitStatus.getSelectedItem().toString());
                 }
             }
         });
@@ -132,5 +183,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                 android.R.layout.simple_spinner_item, arrStat);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnDetailAbschlussarbeitStatus.setAdapter(adapter2);
+
+
     }
 }

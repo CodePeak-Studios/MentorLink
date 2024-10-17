@@ -112,4 +112,23 @@ public class User
     public void setFachbereiche(String fachbereiche) {
         this.fachbereiche = fachbereiche;
     }
+
+    /**********************************************************************************************
+     |                                 zusätzliche Funktionen                                     |
+     **********************************************************************************************/
+
+    public String getAuslastungsString (int auslastung) {
+        String auslastungString = "";
+
+        if (auslastung == 0) {
+            auslastungString = "Frei";
+        } else if (auslastung == 1) {
+            auslastungString = "Beschäftigt";
+        } else if (auslastung == 2) {
+            auslastungString = "Ausgelastet";
+        }
+
+        return auslastungString;
+    }
+
 }

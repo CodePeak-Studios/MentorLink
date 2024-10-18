@@ -13,16 +13,18 @@
         android:orientation="vertical"
         android:background="@drawable/customborder"
         android:backgroundTint="@color/reinWeiss">
+
         <TextView
             android:id="@+id/tvAbschlussarbeitUeberschriftBP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textSize="22sp"
-            android:textStyle="bold"
             android:backgroundTint="@color/orange"
-            android:textColor="@color/black"/>
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvAbschlussarbeitenKurzbeschreibungBP"

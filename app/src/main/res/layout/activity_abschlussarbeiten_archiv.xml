@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grau_weiss"
-    tools:context=".DetailBetreuer">
+    tools:context=".AbschlussarbeitenArchiv">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -54,19 +53,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:text="Betreuer Profil"
+        android:text="Archiv"
         android:textColor="@color/reinWeiss"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/toolbar2" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFreieArbeiten"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

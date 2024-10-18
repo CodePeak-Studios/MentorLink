@@ -1,5 +1,8 @@
 package com.example.mentorlink;
 
+
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.text.SpannableString;
@@ -10,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -44,9 +49,10 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
         if(mData.get(position).getBetreuer() == 1)
         {
             holder.btnRolle.setText("Betreuer");
-        } else if (mData.get(position).getZweitgutachter() == 1)
+        } if (mData.get(position).getZweitgutachter() == 1)
         {
             holder.btnRolle.setText("Zweitgutachter");
+            holder.btnRolle.setBackgroundColor(ContextCompat.getColor(holder.btnRolle.getContext(), R.color.pink));
         }
 
     }

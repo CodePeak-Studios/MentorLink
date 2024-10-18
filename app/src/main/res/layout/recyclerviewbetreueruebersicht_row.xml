@@ -21,7 +21,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="4dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/linearrvBetreuerUebersicht"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -36,8 +38,8 @@
                 android:text="Klaus Müller"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/betreuerAuslastung"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -48,8 +50,8 @@
                 android:text="Ausgelastet"
                 android:textColor="@color/darkRot"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/betreuerName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -59,8 +61,8 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:text="Softwareentwicklung mit KI, Automatisiertes Fahren, Technik Generell"
-            android:textAlignment="center"
+            android:text="Social Media Marketing und Content Creation, Markenführung und Corporate Branding, Konsumentenpsychologie und Marktforschung, Digitales Marketing und SEO, Werbestrategien und Medienplanung, Influencer Marketing und Community Building"
+            android:textAlignment="textStart"
             android:textSize="14sp" />
     </LinearLayout>
 

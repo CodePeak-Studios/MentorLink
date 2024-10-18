@@ -41,22 +41,6 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
 
         dbHandler = new DBHandler(getApplicationContext());
 
-        tvProfilName = findViewById(R.id.tvProfilName);
-        tvProfilAuslastung = findViewById(R.id.tvProfilAuslastung);
-        tvProfilFachbereiche = findViewById(R.id.tvProfilFachbereiche);
-
-        String kompletterName = dbHandler.getUserNachID(betreuerID).getVorname() + " " + dbHandler.getUserNachID(betreuerID).getNachname();
-        tvProfilName.setText(kompletterName);
-        tvProfilAuslastung.setText(dbHandler.getUserNachID(betreuerID).getAuslastungsString(dbHandler.getUserNachID(betreuerID).getAuslastung()));
-        if (dbHandler.getUserNachID(betreuerID).getAuslastung() == 0) {
-            tvProfilAuslastung.setTextColor(tvProfilAuslastung.getResources().getColor(R.color.green));
-        } else if (dbHandler.getUserNachID(betreuerID).getAuslastung() == 1) {
-            tvProfilAuslastung.setTextColor(tvProfilAuslastung.getResources().getColor(R.color.orange));
-        } else if (dbHandler.getUserNachID(betreuerID).getAuslastung() == 2) {
-            tvProfilAuslastung.setTextColor(tvProfilAuslastung.getResources().getColor(R.color.darkRot));
-        }
-        tvProfilFachbereiche.setText(dbHandler.getUserNachID(betreuerID).getFachbereiche());
-
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(betreuerID, 1);
 
         RecyclerView recyclerView = findViewById(R.id.rvFreieArbeiten);
@@ -77,7 +61,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
 
         String beispielMailString = "Guten Tag Herr " + betreuerNachname + ",\n\nhiermit melde ich mich zu dem folgenden Thema an:\n\n"
                 + dbHandler.getAbschlussarbeitNachID(abschlussarbeitID).getUeberschrift()
-                + "\n \nBitte bestätigen Sie mir die Anmeldung, damit mit der Bearbeitung gestartet werden kann.\n" +
+                + "\n \nBitte bestätigen Sie mir die Anmeldung, damit mit der Bearbeitung gestartet werden kann.\n\n" +
                 "Mit freundlichen Grüßen\n";
 
 

@@ -41,6 +41,19 @@ public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<Recy
         str.setSpan(new BackgroundColorSpan(Color.rgb(255, 167, 58)), 0, str.length(), 0);
         holder.tvUeberschriftBP.setText(str);
         holder.tvKurzbeschreibungBP.setText(mData.get(position).getKurzbeschreibung());
+
+        holder.btnAuswaehlen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mClickListener != null) {
+                    int currentposition = holder.getAdapterPosition();
+                    if (currentposition != RecyclerView.NO_POSITION) {
+                        mClickListener.onItemClick(view, currentposition);
+                    }
+
+                }
+            }
+        });
     }
 
     // total number of rows
@@ -59,12 +72,17 @@ public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<Recy
         ViewHolder(View itemView) {
             super(itemView);
             tvUeberschriftBP = itemView.findViewById(R.id.tvAbschlussarbeitUeberschriftBP);
-            itemView.setOnClickListener(this);
             tvKurzbeschreibungBP = itemView.findViewById(R.id.tvAbschlussarbeitenKurzbeschreibungBP);
-            itemView.setOnClickListener(this);
             btnAuswaehlen = itemView.findViewById(R.id.btnBetreuerProfilAuswaehlen);
-            itemView.setOnClickListener(this);
-        }
+            btnAuswaehlen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mClickListener != null) {
+                        mClickListener.onItemClick(view, getAdapterPosition());
+                    }
+                }
+        });
+    }
 
         @Override
         public void onClick(View view) {
@@ -73,8 +91,16 @@ public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<Recy
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData.get(id).getUeberschrift();
+    String getItem(int position) {
+        return mData.get(position).getUeberschrift();
+    }
+
+    int getBetreuerID(int position) {
+        return mData.get(position).getBetreuer();
+    }
+
+    int getAbschlussarbeitID(int position) {
+        return mData.get(position).getId();
     }
 
     // allows clicks events to be caught

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class DetailBetreuer extends AppCompatActivity  {
+public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAdapterBetreuerProfil.ItemClickListener  {
 
     RecyclerViewAdapterBetreuerProfil adapter;
     DBHandler dbHandler;
@@ -62,11 +62,31 @@ public class DetailBetreuer extends AppCompatActivity  {
         RecyclerView recyclerView = findViewById(R.id.rvFreieArbeiten);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapterBetreuerProfil(this, abschlussarbeiten);
-//        adapter.setClickListener(this);
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
     }
 
+        public void onItemClick(View view, int position) {
+        int betreuerID = adapter.getBetreuerID(position);
+        String emailBetreuer = dbHandler.getUserNachID(betreuerID).getMail();
+        String betreuerNachname = dbHandler.getUserNachID(betreuerID).getNachname();
 
+        int abschlussarbeitID = adapter.getAbschlussarbeitID(position);
+        String themaString = "Anmeldung zu Abschlussarbeit-Thema: " + dbHandler.getAbschlussarbeitNachID(abschlussarbeitID).getUeberschrift();
+
+        String beispielMailString = "Guten Tag Herr " + betreuerNachname + ",\n\nhiermit melde ich mich zu dem folgenden Thema an:\n\n"
+                + dbHandler.getAbschlussarbeitNachID(abschlussarbeitID).getUeberschrift()
+                + "\n \nBitte bestätigen Sie mir die Anmeldung, damit mit der Bearbeitung gestartet werden kann.\n" +
+                "Mit freundlichen Grüßen\n";
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailBetreuer} );
+        intent.putExtra(Intent.EXTRA_SUBJECT, themaString);
+        intent.putExtra(Intent.EXTRA_TEXT, beispielMailString);
+        startActivity(Intent.createChooser(intent, "Send Mail"));
+    }
 
 }

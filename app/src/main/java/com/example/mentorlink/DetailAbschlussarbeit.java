@@ -16,8 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.w3c.dom.Text;
-
 public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstanten {
 
 
@@ -30,7 +28,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private TextView edtDetailAbschlussarbeitStudentMail;
     private TextView tvDetailAbschlussarbeitStudentName;
     private Button btnDetailAbschlussarbeitSpeichern;
-    private Button btnDetailAbschlussarbeitLöschen;
+    private Button btnDetailAbschlussarbeitLoeschen;
     private EditText edtDetailAbschlussarbeitKurzbeschreibung;
 
     private TextView tvDetailAbschlussarbeitUeberschrift;
@@ -68,7 +66,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         edtDetailAbschlussarbeitStudentMail = findViewById(R.id.edtDetailAbschlussarbeitStudentMail);
         tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAbschlussarbeitStudentName);
         btnDetailAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailAbschlussarbeit);
-        btnDetailAbschlussarbeitLöschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
+        btnDetailAbschlussarbeitLoeschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
         edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
         tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAbschlussarbeitUeberschrift);
         tvDetailAbschlussarbeitBetreuer = findViewById(R.id.tvDetailAbschlussarbeitBetreuerName);
@@ -87,14 +85,20 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             Toast.makeText(getApplicationContext(), "Es gab einen Fehler beim Laden des Vorschlages.\n" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
+        this.loadSpinner();
+
         tvDetailAbschlussarbeitUeberschrift.setText(geladeneAbschlussarbeit.getUeberschrift());
         edtDetailAbschlussarbeitKurzbeschreibung.setText(geladeneAbschlussarbeit.getKurzbeschreibung());
-        spnDetailAbschlussarbeitKategorie.setSelection(geladeneAbschlussarbeit.getKategorie());
-        spnDetailAbschlussarbeitStatus.setSelection(geladeneAbschlussarbeit.getStatus());
+        spnDetailAbschlussarbeitKategorie.setSelection(geladeneAbschlussarbeit.getKategorie()-1);
+        spnDetailAbschlussarbeitStatus.setSelection(geladeneAbschlussarbeit.getStatus()-1);
         tvDetailAbschlussarbeitBetreuer.setText(dbHandler.getUserNachID(geladeneAbschlussarbeit.getBetreuer()).getVorname()
                 + " " + dbHandler.getUserNachID(geladeneAbschlussarbeit.getBetreuer()).getNachname());
         edtDetailAbschlussarbeitZweitgutachterMail.setText((dbHandler.getUserNachID(geladeneAbschlussarbeit.getZweitgutachter())).getMail());
         edtDetailAbschlussarbeitStudentMail.setText((dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent())).getMail());
+        tvDetailAbschlussarbeitZweitgutachterName.setText(dbHandler.getUserNachID(geladeneAbschlussarbeit.getZweitgutachter()).getVorname()
+                + " " + dbHandler.getUserNachID(geladeneAbschlussarbeit.getZweitgutachter()).getNachname());
+        tvDetailAbschlussarbeitStudentName.setText(dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent()).getVorname()
+                + " " + dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent()).getNachname());
 
 
         btnSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +132,19 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                 }
             }
         });
+
+
+        //Loescht eine Abschlussarbeit
+        btnDetailAbschlussarbeitLoeschen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
+                Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                startActivity(intent);
+            }
+        });
+
 
         
         //Pruefen, ob benoetigte Felder ausgefuellt wurden
@@ -173,6 +190,10 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             }
         });
 
+    }
+
+    private void loadSpinner()
+    {
         //Spinner werden mit vorgegebene Werten aus dem Interface belegt
         String[] arrKat = new String[]
                 {
@@ -209,7 +230,5 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                 android.R.layout.simple_spinner_item, arrStat);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnDetailAbschlussarbeitStatus.setAdapter(adapter2);
-
-
     }
 }

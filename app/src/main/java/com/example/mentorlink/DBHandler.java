@@ -509,4 +509,40 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**********************************************************************************************
+     |                                 Abschlussarbeiten DELETE                                    |
+     **********************************************************************************************/
+
+    public void deleteAbschlussarbeit(int abschlussarbeitId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Table_SECOND, "ID=" + Integer.toString(abschlussarbeitId), null);
+        db.close();
+    }
+
+    /**********************************************************************************************
+     |                                 Abschlussarbeiten CREATE                                    |
+     **********************************************************************************************/
+
+    public void addAbschlussarbeit(Abschlussarbeit newabschlussarbeit)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(col_UEBERSCHRIFT, newabschlussarbeit.getUeberschrift());
+        values.put(col_KURZBESCHREIBUNG, newabschlussarbeit.getKurzbeschreibung());
+        values.put(col_KATEGORIE, newabschlussarbeit.getKategorie());
+        values.put(col_STATUS, newabschlussarbeit.getStatus());
+        values.put(col_BETREUER, newabschlussarbeit.getBetreuer());
+        values.put(col_ZWEITGUTACHTER, newabschlussarbeit.getZweitgutachter());
+        values.put(col_STUDENT, newabschlussarbeit.getStudent());
+
+        db.insert(Table_SECOND, null, values);
+
+        db.close();
+    }
+
+
+
 }

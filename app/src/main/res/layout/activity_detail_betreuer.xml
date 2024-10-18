@@ -110,6 +110,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/roboto"
                 android:text="Ausgelastet"
                 android:textAlignment="center"
                 android:textSize="20sp" />
@@ -132,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:fontFamily="@font/roboto"
                 android:text="Fachbereiche:"
                 android:textAllCaps="false"
                 android:textSize="18sp"
@@ -148,6 +150,19 @@
                 android:textAlignment="viewStart"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/roboto"
+            android:text="Ausgeschriebene Arbeiten:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFreieArbeiten"

@@ -53,7 +53,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentNeuerVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
+                Intent intentNeuerVorschlag = new Intent(getApplicationContext(), DetailNewAbschlussarbeit.class);
                 intentNeuerVorschlag.putExtra("idUser", 1);
                 startActivity(intentNeuerVorschlag);
             }

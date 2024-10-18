@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailNewAbschlussarbeit">
+
+    <EditText
+        android:id="@+id/edtDetailNewAbschlussarbeitUeberschrift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:hint="Überschrift eingeben"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:background="@drawable/tv_roundedcorner"
+        android:padding="3dp"
+        android:layout_margin="20dp"/>
+
+
+    <EditText
+        android:id="@+id/edtDetailNewAbschlussarbeitKurzbeschreibung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edtDetailNewAbschlussarbeitUeberschrift"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:editable="false"
+        android:ems="10"
+        android:gravity="top|start"
+        android:hint="Kurzbeschreibung"
+        android:imeOptions="actionNext"
+        android:inputType="textMultiLine"
+        android:lines="16"
+        android:maxLines="10"
+        android:minLines="6"
+        android:padding="20sp"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:textSize="18sp"
+        tools:ignore="Deprecated"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="39dp" />
+
+    <LinearLayout
+        android:id="@+id/linearDetailNewAbschlussarbeitKategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/edtDetailNewAbschlussarbeitKurzbeschreibung"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kategorie: "
+            android:layout_marginRight="25dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+
+        <Spinner
+            android:id="@+id/spnDetailNewAbschlussarbeitKategorie"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintHorizontal_bias="0.000"
+            android:spinnerMode="dropdown"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearDetailNewAbschlussarbeitStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitKategorie"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: "
+            android:layout_marginRight="50dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            />
+
+        <Spinner
+            android:id="@+id/spnDetailNewAbschlussarbeitStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintHorizontal_bias="0.000"
+            android:spinnerMode="dropdown"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearDetailNewAbschlussarbeitBetreuer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitStatus"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Betreuer: "
+            android:layout_marginRight="73dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tvDetailNewAbschlussarbeitBetreuerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lena Schmidt"
+            android:layout_marginRight="50dp"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearDetailNewAbschlussarbeitZweitgutachter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitBetreuer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zweitgutachter: "
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="18dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvDetailNewAbschlussarbeitZweitgutachterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="3dp"
+                    android:text="Name"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSearchZweitgutachterDetailNewAbschlussarbeiten"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/buttonBlau"
+                    app:icon="@drawable/baseline_search_24"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/edtDetailNewAbschlussarbeitZweitgutachterMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:hint="E-Mail"
+                android:textSize="15sp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearDetailNewAbschlussarbeitStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitZweitgutachter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student: "
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="75dp"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvDetailNewAbschlussarbeitStudentName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="3dp"
+                    android:text="Name"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSearchStudentDetailNewAbschlussarbeiten"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/buttonBlau"
+                    app:icon="@drawable/baseline_search_24"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/edtDetailNewAbschlussarbeitStudentMail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="200dp"
+                android:hint="E-Mail"
+                android:textSize="15sp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btnLoeschenDetailNewAbschlussarbeit"
+        android:layout_width="wrap_content"
+        android:minWidth="115dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitStudent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnSpeichernDetailNewAbschlussarbeit"
+        android:backgroundTint="@color/buttonBlau"
+        android:text="Löschen"
+
+        />
+
+    <Button
+        android:id="@+id/btnSpeichernDetailNewAbschlussarbeit"
+        android:layout_width="wrap_content"
+        android:minWidth="115dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearDetailNewAbschlussarbeitStudent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/btnLoeschenDetailNewAbschlussarbeit"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="@color/buttonBlau"
+        android:text="Erstellen"
+
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

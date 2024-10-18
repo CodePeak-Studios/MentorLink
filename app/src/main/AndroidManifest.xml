@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MentorLink"
         tools:targetApi="31">
         <activity
+            android:name=".AbschlussarbeitenArchiv"
+            android:exported="false" />
+        <activity
             android:name=".DetailNewAbschlussarbeit"
             android:exported="false" />
         <activity

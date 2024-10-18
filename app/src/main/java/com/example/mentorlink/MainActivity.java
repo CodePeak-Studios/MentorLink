@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartBetreuerUebersicht;
     private Button btnStartAbschlussarbeiten;
     private Button btnStartMeineThemen;
+    private Button btnStartArchiv;
 
     DBHandler dbHandler;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btnStartBetreuerUebersicht = findViewById(R.id.btnStartBetreuerUebersicht);
         btnStartAbschlussarbeiten = findViewById(R.id.btnStartAbschlussarbeiten);
         btnStartMeineThemen = findViewById(R.id.btnStartMeineThemen);
+        btnStartArchiv = findViewById(R.id.btnStartArchiv);
 
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();
@@ -65,6 +67,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnStartArchiv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                startActivity(i);
+            }
+        });
+
+
 
     }
 }

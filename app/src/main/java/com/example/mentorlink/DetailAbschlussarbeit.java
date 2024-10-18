@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -86,6 +87,16 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         }
 
         this.loadSpinner();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                startActivity(i);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         tvDetailAbschlussarbeitUeberschrift.setText(geladeneAbschlussarbeit.getUeberschrift());
         edtDetailAbschlussarbeitKurzbeschreibung.setText(geladeneAbschlussarbeit.getKurzbeschreibung());

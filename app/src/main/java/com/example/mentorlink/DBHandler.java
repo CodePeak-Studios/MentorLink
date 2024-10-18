@@ -373,9 +373,9 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + Table_SECOND
-                + " WHERE " + col_STUDENT + " = " + userID
+                + " WHERE " + "(" + col_STUDENT + " = " + userID
                 + " OR " + col_BETREUER + " = " + userID
-                + " OR " + col_ZWEITGUTACHTER + " = " + userID
+                + " OR " + col_ZWEITGUTACHTER + " = " + userID + ")"
                 + " AND " + col_STATUS + " = " + status;
 
         Cursor cursor = db.rawQuery(query, null);

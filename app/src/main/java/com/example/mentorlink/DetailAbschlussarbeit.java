@@ -134,11 +134,14 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         });
 
 
+        //Loescht eine Abschlussarbeit
         btnDetailAbschlussarbeitLoeschen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-
+                dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
+                Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                startActivity(intent);
             }
         });
 

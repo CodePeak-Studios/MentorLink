@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +24,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
-import kotlinx.coroutines.flow.internal.AbstractSharedFlow;
 
 public class Abschlussarbeiten extends AppCompatActivity implements RecyclerViewAdapter.ItemClickListener {
 
@@ -47,6 +46,18 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
 
         addFab = findViewById(R.id.fab_addVorschlag);
         dbHandler = new DBHandler(getApplicationContext());
+
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 1);
 

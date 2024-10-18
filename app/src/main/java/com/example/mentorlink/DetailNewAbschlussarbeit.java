@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -73,6 +74,17 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
                 + " " + dbHandler.getUserNachID(1).getNachname());
 
         this.loadSpinner();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                startActivity(i);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
 
         btnDetailNewAbschlussarbeitSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
             @Override

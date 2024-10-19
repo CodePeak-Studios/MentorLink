@@ -3,9 +3,11 @@ package com.example.mentorlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +21,7 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
 
     RecyclerViewAdapterBetreuerUebersicht adapter;
     DBHandler dbHandler;
+    ImageButton btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,24 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
         });
 
         dbHandler = new DBHandler(getApplicationContext());
+        btnHome = findViewById(R.id.btn_home);
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        };
 
         ArrayList<User> users = dbHandler.getUsersNachRolle(1);
 

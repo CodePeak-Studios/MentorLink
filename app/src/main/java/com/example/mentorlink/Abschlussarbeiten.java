@@ -3,6 +3,7 @@ package com.example.mentorlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,8 +31,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
     RecyclerViewAdapter adapter;
     DBHandler dbHandler;
     FloatingActionButton addFab;
-
-
+    ImageButton btnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,15 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
 
         addFab = findViewById(R.id.fab_addVorschlag);
         dbHandler = new DBHandler(getApplicationContext());
+        btnHome = findViewById(R.id.btn_home);
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {

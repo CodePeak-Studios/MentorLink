@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         btnStartBetreuerUebersicht.setOnClickListener(new View.OnClickListener()
         {

@@ -22,6 +22,8 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
     RecyclerViewAdapter adapter;
     DBHandler dbHandler;
     ImageButton btnHome;
+    int userId;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intentVonStartseite = getIntent();
+        userId = intentVonStartseite.getIntExtra("aktiverUser", -1);
 
         dbHandler = new DBHandler(getApplicationContext());
         btnHome = findViewById(R.id.btn_home);
@@ -56,7 +61,7 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
         getOnBackPressedDispatcher().addCallback(this, callback);
 
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 10);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(userId, 10);
 
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeitenArchiv);

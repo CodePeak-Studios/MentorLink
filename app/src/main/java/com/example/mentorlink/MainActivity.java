@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });

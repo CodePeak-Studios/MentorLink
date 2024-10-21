@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,6 +22,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
     RecyclerViewAdapterAktiveArbeiten adapter;
     DBHandler dbHandler;
+    ImageButton btnHome;
 
 
     @Override
@@ -36,6 +38,15 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
 
         dbHandler = new DBHandler(getApplicationContext());
+        btnHome = findViewById(R.id.btn_home);
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(1);
 

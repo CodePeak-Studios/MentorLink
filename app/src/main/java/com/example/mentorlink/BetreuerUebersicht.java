@@ -53,6 +53,7 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
                 startActivity(i);
             }
         };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         ArrayList<User> users = dbHandler.getUsersNachRolle(1);
 

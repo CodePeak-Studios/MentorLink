@@ -68,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    // Gibt Abschlussarbeit an Position au
+    // Gibt Abschlussarbeit an Position aus
     Abschlussarbeit getItem(int id) {
         return mData.get(id);
     }

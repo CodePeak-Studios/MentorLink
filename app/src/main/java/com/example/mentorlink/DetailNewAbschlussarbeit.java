@@ -64,7 +64,6 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
         edtDetailNewAbschlussarbeitStudentMail = findViewById(R.id.edtDetailNewAbschlussarbeitStudentMail);
         tvDetailNewAbschlussarbeitStudentName = findViewById(R.id.tvDetailNewAbschlussarbeitStudentName);
         btnDetailNewAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailNewAbschlussarbeit);
-        btnDetailNewAbschlussarbeitLoeschen = findViewById(R.id.btnLoeschenDetailNewAbschlussarbeit);
         edtDetailNewAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailNewAbschlussarbeitKurzbeschreibung);
         tvDetailNewAbschlussarbeitBetreuer = findViewById(R.id.tvDetailNewAbschlussarbeitBetreuerName);
         edtDetailNewAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailNewAbschlussarbeitUeberschrift);

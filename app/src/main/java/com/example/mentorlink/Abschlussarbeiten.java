@@ -81,11 +81,11 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
         Abschlussarbeit clicked = adapter.getItem(position);
 
         Intent intentBestehenderVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
+        //TODO Hier muss der aktuelle User als Parameter übergeben werden
         intentBestehenderVorschlag.putExtra("idUser", 1);
         intentBestehenderVorschlag.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentBestehenderVorschlag);

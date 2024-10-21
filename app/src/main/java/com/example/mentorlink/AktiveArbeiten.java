@@ -1,11 +1,13 @@
 package com.example.mentorlink;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -37,6 +39,15 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(1);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAktiveArbeiten);
@@ -49,7 +60,14 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
+        Abschlussarbeit clicked = adapter.getItem(position);
+
+        Intent intentAktiveAbschlussarbeit = new Intent(getApplicationContext(), DetailAktiveAbschlussarbeit.class);
+        //TODO Hier muss der aktuelle User als Parameter übergeben werden
+        intentAktiveAbschlussarbeit.putExtra("idUser", 1);
+        intentAktiveAbschlussarbeit.putExtra("AbschlussarbeitId", clicked.getId());
+        startActivity(intentAktiveAbschlussarbeit);
     }
 
 }

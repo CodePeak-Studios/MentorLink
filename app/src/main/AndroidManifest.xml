@@ -13,9 +13,16 @@
         android:theme="@style/Theme.MentorLink"
         tools:targetApi="31">
         <activity
-            android:name=".Login"
-            android:exported="false" />
+			android:name=".DetailAktiveAbschlussarbeit"
+			android:exported="false"
+			android:windowSoftInputMode="adjustPan"  />
+		<activity
+			android:name=".Login"
+    	    android:exported="false"
+			android:windowSoftInputMode="adjustPan"  />
         <activity
+
+
             android:name=".AbschlussarbeitenArchiv"
             android:exported="false" />
         <activity

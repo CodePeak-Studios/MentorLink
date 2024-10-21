@@ -32,6 +32,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
     DBHandler dbHandler;
     FloatingActionButton addFab;
     ImageButton btnHome;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             @Override
             public void onClick(View v) {
                 Intent intentNeuerVorschlag = new Intent(getApplicationContext(), DetailNewAbschlussarbeit.class);
-                intentNeuerVorschlag.putExtra("idUser", 1);
+                intentNeuerVorschlag.putExtra("idUser", userId);
                 startActivity(intentNeuerVorschlag);
             }
         });
@@ -95,7 +96,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
 
         Intent intentBestehenderVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
         //TODO Hier muss der aktuelle User als Parameter übergeben werden
-        intentBestehenderVorschlag.putExtra("idUser", 1);
+        intentBestehenderVorschlag.putExtra("aktiverUser", userId);
         intentBestehenderVorschlag.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentBestehenderVorschlag);
     }

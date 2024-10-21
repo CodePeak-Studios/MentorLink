@@ -35,7 +35,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private TextView tvDetailAbschlussarbeitUeberschrift;
     private TextView tvDetailAbschlussarbeitBetreuer;
 
-
+    private int userId;
 
 
     private DBHandler dbHandler;
@@ -152,6 +152,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             {
                 dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
                 Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                intent.putExtra("aktiverUser", userId);
                 startActivity(intent);
             }
         });
@@ -196,6 +197,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                     updateAbschlussarbeit.setStatus(spnDetailAbschlussarbeitStatus.getSelectedItem().toString());
                     dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
                     Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    intent.putExtra("aktiverUser", userId);
                     startActivity(intent);
                 }
             }

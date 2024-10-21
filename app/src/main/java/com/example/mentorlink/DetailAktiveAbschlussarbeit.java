@@ -50,27 +50,27 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_detail_abschlussarbeit);
+        setContentView(R.layout.activity_detail_aktive_abschlussarbeit);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        spnDetailAbschlussarbeitKategorie = findViewById(R.id.spnDetailAbschlussarbeitKategorie);
-        spnDetailAbschlussarbeitStatus = findViewById(R.id.spnDetailAbschlussarbeitStatus);
-        btnSearchZweitgutachter = findViewById(R.id.btnSearchZweitgutachterDetailAbschlussarbeiten);
-        btnSearchStudent = findViewById(R.id.btnSearchStudentDetailAbschlussarbeiten);
+        spnDetailAbschlussarbeitKategorie = findViewById(R.id.spnDetailAktiveAbschlussarbeitKategorie);
+        spnDetailAbschlussarbeitStatus = findViewById(R.id.spnDetailAktiveAbschlussarbeitStatus);
+        btnSearchZweitgutachter = findViewById(R.id.btnSearchZweitgutachterDetailAktiveAbschlussarbeiten);
+        btnSearchStudent = findViewById(R.id.btnSearchStudentDetailAktiveAbschlussarbeiten);
         dbHandler = new DBHandler(getApplicationContext());
-        edtDetailAbschlussarbeitZweitgutachterMail = findViewById(R.id.edtDetailAbschlussarbeitZweitgutachterMail);
-        tvDetailAbschlussarbeitZweitgutachterName = findViewById(R.id.tvDetailAbschlussarbeitZweitgutachterName);
-        edtDetailAbschlussarbeitStudentMail = findViewById(R.id.edtDetailAbschlussarbeitStudentMail);
-        tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAbschlussarbeitStudentName);
-        btnDetailAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailAbschlussarbeit);
-        btnDetailAbschlussarbeitLoeschen = findViewById(R.id.btnLoeschenDetailAbschlussarbeit);
-        edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
-        tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAbschlussarbeitUeberschrift);
-        tvDetailAbschlussarbeitBetreuer = findViewById(R.id.tvDetailAbschlussarbeitBetreuerName);
+        edtDetailAbschlussarbeitZweitgutachterMail = findViewById(R.id.edtDetailAktiveAbschlussarbeitZweitgutachterMail);
+        tvDetailAbschlussarbeitZweitgutachterName = findViewById(R.id.tvDetailAktiveAbschlussarbeitZweitgutachterName);
+        edtDetailAbschlussarbeitStudentMail = findViewById(R.id.edtDetailAktiveAbschlussarbeitStudentMail);
+        tvDetailAbschlussarbeitStudentName = findViewById(R.id.tvDetailAktiveAbschlussarbeitStudentName);
+        btnDetailAbschlussarbeitSpeichern = findViewById(R.id.btnSpeichernDetailAktiveAbschlussarbeit);
+        btnDetailAbschlussarbeitLoeschen = findViewById(R.id.btnLoeschenDetailAktiveAbschlussarbeit);
+        edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAktiveAbschlussarbeitKurzbeschreibung);
+        tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAktiveAbschlussarbeitUeberschrift);
+        tvDetailAbschlussarbeitBetreuer = findViewById(R.id.tvDetailAktiveAbschlussarbeitBetreuerName);
 
 
         Intent intentVonVorschlaege = getIntent();

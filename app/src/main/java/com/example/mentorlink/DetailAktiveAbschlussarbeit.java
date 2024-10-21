@@ -43,6 +43,7 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
     private int intentIdUser;
     private int intentAbschlussarbeit;
     private Abschlussarbeit geladeneAbschlussarbeit;
+    private int userId;
 
 
 
@@ -75,7 +76,7 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
 
         Intent intentVonVorschlaege = getIntent();
 
-        intentIdUser = intentVonVorschlaege.getIntExtra("idUser", -1);
+        intentIdUser = intentVonVorschlaege.getIntExtra("aktiverUser", -1);
         intentAbschlussarbeit = intentVonVorschlaege.getIntExtra("AbschlussarbeitId", -1);
 
         try {
@@ -152,6 +153,7 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
             {
                 dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
                 Intent intent = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                intent.putExtra("aktiverUser", userId);
                 startActivity(intent);
             }
         });
@@ -196,6 +198,7 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
                     updateAbschlussarbeit.setStatus(spnDetailAbschlussarbeitStatus.getSelectedItem().toString());
                     dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
                     Intent intent = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                    intent.putExtra("aktiverUser", userId);
                     startActivity(intent);
                 }
             }

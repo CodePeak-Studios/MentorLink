@@ -40,6 +40,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
     private int intentIdUser;
     private int intentAbschlussarbeit;
     private Abschlussarbeit geladeneAbschlussarbeit;
+    private int userId;
 
 
     @Override
@@ -69,8 +70,12 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
         edtDetailNewAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailNewAbschlussarbeitUeberschrift);
 
         //TODO Hardcoded User, hier muss der angemeldete hin
-        tvDetailNewAbschlussarbeitBetreuer.setText(dbHandler.getUserNachID(1).getVorname()
-                + " " + dbHandler.getUserNachID(1).getNachname());
+
+        Intent intentvonVorschlaege = getIntent();
+        userId = intentvonVorschlaege.getIntExtra("aktiverUser", -1);
+
+        tvDetailNewAbschlussarbeitBetreuer.setText(dbHandler.getUserNachID(userId).getVorname()
+                + " " + dbHandler.getUserNachID(userId).getNachname());
 
         this.loadSpinner();
 
@@ -123,7 +128,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
                 } else {
                     Abschlussarbeit newAbschlussarbeit = new Abschlussarbeit();
                     newAbschlussarbeit.setUeberschrift(edtDetailNewAbschlussarbeitUeberschrift.getText().toString());
-                    newAbschlussarbeit.setBetreuer(1); //TODO Hardcoded User, hier muss der angemeldete hin
+                    newAbschlussarbeit.setBetreuer(dbHandler.getUserNachID(userId).getId()); //TODO Hardcoded User, hier muss der angemeldete hin
                     newAbschlussarbeit.setKurzbeschreibung(edtDetailNewAbschlussarbeitKurzbeschreibung.getText().toString());
                     if (!(edtDetailNewAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty())) {
                         newAbschlussarbeit.setZweitgutachter(dbHandler.getUserNachMail(edtDetailNewAbschlussarbeitZweitgutachterMail.getText().toString()).getId());
@@ -142,6 +147,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
                     newAbschlussarbeit.setStatus(spnDetailNewAbschlussarbeitStatus.getSelectedItem().toString());
                     dbHandler.addAbschlussarbeit(newAbschlussarbeit);
                     Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    intent.putExtra("aktiverUser", userId);
                     startActivity(intent);
                 }
             }

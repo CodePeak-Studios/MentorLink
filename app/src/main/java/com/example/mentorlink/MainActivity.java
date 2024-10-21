@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutButton);
         tvBegruessung = findViewById(R.id.halloNachricht);
 
-        Intent intentVonLogin = getIntent();
-
-        userId = intentVonLogin.getIntExtra("aktiverUser", -1);
+        Intent intentUserId = getIntent();
+        userId = intentUserId.getIntExtra("aktiverUser", -1);
 
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();

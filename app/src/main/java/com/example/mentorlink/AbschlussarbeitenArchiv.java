@@ -46,6 +46,7 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -55,6 +56,7 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

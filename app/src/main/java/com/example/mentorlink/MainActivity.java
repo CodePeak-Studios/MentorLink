@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutButton);
         tvBegruessung = findViewById(R.id.halloNachricht);
 
-        Intent intentVonLogin = getIntent();
-
-        userId = intentVonLogin.getIntExtra("aktiverUser", -1);
+        Intent intentUserId = getIntent();
+        userId = intentUserId.getIntExtra("aktiverUser", -1);
 
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();
@@ -78,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });

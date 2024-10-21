@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartArchiv;
     private ImageButton logoutBtn;
     private TextView tvBegruessung;
+    private int userId;
+    private User user;
 
     DBHandler dbHandler;
 
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         btnStartArchiv = findViewById(R.id.btnStartArchiv);
         logoutBtn = findViewById(R.id.logoutButton);
         tvBegruessung = findViewById(R.id.halloNachricht);
+
+        Intent intentVonLogin = getIntent();
+
+        userId = intentVonLogin.getIntExtra("aktiverUser", -1);
 
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();
@@ -101,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        User user = dbHandler.getUserNachID(4);
+        user = dbHandler.getUserNachID(userId);
         String kompletterName = user.getVorname() + " " + user.getNachname();
-        tvBegruessung.setText("Hallo " + kompletterName + "!");
+        tvBegruessung.setText("Moin " + kompletterName + "!");
 
 
     }

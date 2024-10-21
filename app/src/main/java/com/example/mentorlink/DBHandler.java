@@ -6,7 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -252,6 +258,63 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor.close();
         }
         return users;
+    }
+
+
+    public User checkPassword(String email, String password) {
+
+        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+
+        User user = new User();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String mailForQuery = "'" + email + "'";
+
+        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user.setId(cursor.getInt(0));
+            user.setVorname(cursor.getString(1));
+            user.setNachname(cursor.getString(2));
+            user.setMail(cursor.getString(3));
+            user.setPasswort(cursor.getString(4));
+            user.setTeamsUser(cursor.getString(5));
+            user.setRolle(cursor.getInt(6));
+            user.setAuslastung(cursor.getInt(7));
+            user.setFachbereiche(cursor.getString(8));
+
+            cursor.close();
+        }
+
+        if (user.getPasswort().equals(hashedPassword))
+        {
+            return user;
+        }
+        else
+        {
+            return new User();
+        }
+    }
+
+    private static String get_SHA_256_SecurePassword(String passwordToHash,
+                                                     String salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
+                        .substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 
     /**********************************************************************************************

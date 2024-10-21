@@ -3,10 +3,11 @@ package com.example.mentorlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -23,6 +24,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
     TextView tvProfilName;
     TextView tvProfilAuslastung;
     TextView tvProfilFachbereiche;
+    ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,25 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
         betreuerID++;
 
         dbHandler = new DBHandler(getApplicationContext());
+
+        btnBack = findViewById(R.id.btn_zurueck);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), BetreuerUebersicht.class);
+                startActivity(i);
+            }
+        });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent i = new Intent(getApplicationContext(), BetreuerUebersicht.class);
+                startActivity(i);
+            }
+        };
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(betreuerID, 1);
 

@@ -23,6 +23,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
     RecyclerViewAdapterAktiveArbeiten adapter;
     DBHandler dbHandler;
     ImageButton btnHome;
+    private int userId;
 
 
     @Override
@@ -39,6 +40,9 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         dbHandler = new DBHandler(getApplicationContext());
         btnHome = findViewById(R.id.btn_home);
+
+        Intent intentvonStartseite = getIntent();
+        userId = intentvonStartseite.getIntExtra("aktiverUser", -1);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         Intent intentAktiveAbschlussarbeit = new Intent(getApplicationContext(), DetailAktiveAbschlussarbeit.class);
         //TODO Hier muss der aktuelle User als Parameter übergeben werden
-        intentAktiveAbschlussarbeit.putExtra("idUser", 1);
+        intentAktiveAbschlussarbeit.putExtra("idUser", userId);
         intentAktiveAbschlussarbeit.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentAktiveAbschlussarbeit);
     }

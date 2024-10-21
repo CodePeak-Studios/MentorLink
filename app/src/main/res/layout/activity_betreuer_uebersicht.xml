@@ -44,6 +44,7 @@
         android:layout_weight="1"
         android:background="#00FFFFFF"
         android:contentDescription="Back Button"
+        android:src="@drawable/icons8_home_button_48"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/toolbar2"

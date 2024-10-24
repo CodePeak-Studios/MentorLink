@@ -15,6 +15,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class Login extends AppCompatActivity {
 
@@ -24,6 +28,18 @@ public class Login extends AppCompatActivity {
     private Button btnAnmelden;
     private DBHandler dbHandler;
     private User user;
+
+    private static String ip = "192.168.178.31";// this is the host ip that your data base exists on you can use 10.0.2.2 for local host found on your pc. use if config for windows to find the ip if the database exists on your pc
+    private static String port = "1433";// the port sql server runs on
+    private static String Classes = "net.sourceforge.jtds.jdbc.Driver";// the driver that is required for this connection
+    private static String database = "MentorLink";// the data base name
+    private static String username = "mentorapp";// the user name
+    private static String password = "password";// the password
+    private static String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database; // the connection url string
+
+    private Connection connection = null;
+    private Button btnDB;
+
 
 
     @Override
@@ -52,6 +68,7 @@ public class Login extends AppCompatActivity {
         btnAnmelden = findViewById(R.id.buttonLogin);
         user = new User();
         dbHandler = new DBHandler(getApplicationContext());
+        btnDB = findViewById(R.id.btnDB);
 
 
         btnAnmelden.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +92,31 @@ public class Login extends AppCompatActivity {
             }
         });
 
-    }
+        btnDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Class.forName(Classes);
+                    connection = DriverManager.getConnection(url, username, password);
+                    Toast.makeText(getApplicationContext(), "Suuper!", Toast.LENGTH_SHORT).show();
+                    btnDB.setText("Juhuu");
+                }
+                catch (ClassNotFoundException c)
+                {
+                    c.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Kaputt.", Toast.LENGTH_LONG).show();
+                }
+                catch (SQLException s)
+                {
+                    s.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Keine Verbindung", Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                }
+            }
+        });
 
+    }
 }

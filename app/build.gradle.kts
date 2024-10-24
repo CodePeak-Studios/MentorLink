@@ -43,4 +43,5 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("com.google.android.material:material:1.3.0-alpha02")
+    implementation ("net.sourceforge.jtds:jtds:1.3.1")
 }

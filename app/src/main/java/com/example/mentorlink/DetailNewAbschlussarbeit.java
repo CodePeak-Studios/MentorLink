@@ -84,6 +84,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

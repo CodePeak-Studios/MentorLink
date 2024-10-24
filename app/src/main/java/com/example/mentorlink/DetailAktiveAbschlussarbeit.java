@@ -94,6 +94,7 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

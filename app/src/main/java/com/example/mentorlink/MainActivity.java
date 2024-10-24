@@ -47,11 +47,14 @@ public class MainActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutButton);
         tvBegruessung = findViewById(R.id.halloNachricht);
 
-        Intent intentUserId = getIntent();
-        userId = intentUserId.getIntExtra("aktiverUser", -1);
-
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();
+
+        //User aus Intent der Login-Seite laden
+        Intent intentUserId = getIntent();
+        userId = intentUserId.getIntExtra("aktiverUser", -1);
+        user = dbHandler.getUserNachID(userId);
+
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        user = dbHandler.getUserNachID(userId);
+
         String kompletterName = user.getVorname() + " " + user.getNachname();
         tvBegruessung.setText("Moin " + kompletterName + "!");
 

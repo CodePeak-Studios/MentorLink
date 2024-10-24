@@ -49,6 +49,9 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         dbHandler = new DBHandler(getApplicationContext());
         btnHome = findViewById(R.id.btn_home);
 
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("aktiverUser", userId);
+
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };
@@ -75,7 +79,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             @Override
             public void onClick(View v) {
                 Intent intentNeuerVorschlag = new Intent(getApplicationContext(), DetailNewAbschlussarbeit.class);
-                intentNeuerVorschlag.putExtra("idUser", userId);
+                intentNeuerVorschlag.putExtra("aktiverUser", userId);
                 startActivity(intentNeuerVorschlag);
             }
         });

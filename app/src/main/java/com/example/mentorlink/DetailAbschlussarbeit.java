@@ -93,6 +93,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

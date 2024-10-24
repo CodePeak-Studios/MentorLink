@@ -59,6 +59,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

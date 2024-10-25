@@ -76,6 +76,16 @@
             android:paddingRight="40dp"
             android:text="Anmelden" />
 
+        <Button
+            android:id="@+id/btnDB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkPink"
+            android:text="Testen">
+
+        </Button>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

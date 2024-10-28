@@ -444,7 +444,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Abschlussarbeit getAbschlussarbeit() {
 
-
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
@@ -473,7 +472,6 @@ public class DBHandler extends SQLiteOpenHelper {
                         abschlussarbeit.setBetreuer(resultSet.getInt(6));
                         abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
                         abschlussarbeit.setStatus(resultSet.getInt(8));
-                        abschlussarbeiten.add(abschlussarbeit);
                     }
                     while (resultSet.next());
                 }
@@ -535,7 +533,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserID(int userID) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -558,6 +555,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -584,7 +582,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserIDUndStatus(int userID, int status) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -605,9 +602,11 @@ public class DBHandler extends SQLiteOpenHelper {
                         " OR " + col_BETREUER + " = " + userID +
                         " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
                         " AND " + col_STATUS + " = " + status);
-                if(resultSet.next())
+                if (resultSet.next())
                 {
-                    do {
+                    do
+                    {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -632,7 +631,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -655,6 +653,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -683,7 +682,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachStatus(int status) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -704,6 +702,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));

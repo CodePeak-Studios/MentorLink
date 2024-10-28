@@ -22,6 +22,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
     RecyclerViewAdapterBetreuerProfil adapter;
     DBHandler dbHandler;
     ImageButton btnBack;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
 
         Intent intent = getIntent();
         int betreuerID = intent.getIntExtra("betreuerID", 0);
+        userId = intent.getIntExtra("aktiverUser", -1);
+
         betreuerID++;
 
         dbHandler = new DBHandler(getApplicationContext());
@@ -46,6 +49,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), BetreuerUebersicht.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -55,6 +59,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), BetreuerUebersicht.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };

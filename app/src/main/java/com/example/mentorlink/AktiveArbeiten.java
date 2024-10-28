@@ -48,11 +48,12 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(1);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(userId);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override

@@ -21,9 +21,6 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
 
     RecyclerViewAdapterBetreuerProfil adapter;
     DBHandler dbHandler;
-    TextView tvProfilName;
-    TextView tvProfilAuslastung;
-    TextView tvProfilFachbereiche;
     ImageButton btnBack;
 
     @Override

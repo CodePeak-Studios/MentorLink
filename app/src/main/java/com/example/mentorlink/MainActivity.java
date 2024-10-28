@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         //User aus Intent der Login-Seite laden
         Intent intentUserId = getIntent();
         userId = intentUserId.getIntExtra("aktiverUser", -1);
-        //user = dbHandler.getUserNachID(userId);
+        user = dbHandler.getUserNachID(userId);
 
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {

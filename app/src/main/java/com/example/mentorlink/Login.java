@@ -80,7 +80,7 @@ public class Login extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        try{
+        /*try{
             Class.forName(Classes);
             connection = DriverManager.getConnection(url, username, password);
         }
@@ -89,7 +89,7 @@ public class Login extends AppCompatActivity {
             e.printStackTrace();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
+        }*/
 
 
         btnAnmelden.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +100,7 @@ public class Login extends AppCompatActivity {
                 Log.i("passwordhash", "Mein Passwort ist: " + passwordHash);*/
                 /*user = dbHandler.checkPassword(edtEmail.getText().toString(), edtPasswort.getText().toString());*/
 
-                user = loadReportsInitially();
+                user = dbHandler.checkPassword(edtEmail.getText().toString(), edtPasswort.getText().toString());
 
                 if(user == null)
                 {
@@ -143,38 +143,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private User loadReportsInitially()
-    {
-        if(connection!=null)
-        {
 
-            Statement statement = null;
-
-                try {
-                    statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT TOP(1) id, vorname, nachname, email, passwort, teamsname, rolle, auslastung, fachbereiche FROM [MentorLink].[dbo].[User] WHERE [dbo].[User].email = 'lena.schmidt@architektur.com' AND [dbo].[User].passwort = 'b658ca2deee09dc95dc69a3bf91c64c0f3d069021dc7135e7ac259ba8a60f076'");
-                    if((resultSet.next()))
-                    {
-                        user.setId(resultSet.getInt(1));
-                        user.setVorname(resultSet.getString(2));
-                        user.setNachname(resultSet.getString(3));
-                        user.setMail(resultSet.getString(4));
-                        user.setPasswort(resultSet.getString(5));
-                        user.setTeamsUser(resultSet.getString(6));
-                        user.setRolle(resultSet.getInt(7));
-                        user.setAuslastung(resultSet.getInt(8));
-                        user.setFachbereiche(resultSet.getString(9));;
-                    }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        else
-        {
-            edtEmail.setText("Connection-Fehler");
-        }
-        return user;
-    }
 
     private static String get_SHA_256_SecurePassword(String passwordToHash,
                                                      String salt) {

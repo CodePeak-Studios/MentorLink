@@ -82,7 +82,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         Intent intentAktiveAbschlussarbeit = new Intent(getApplicationContext(), DetailAktiveAbschlussarbeit.class);
         //TODO Hier muss der aktuelle User als Parameter übergeben werden
-        intentAktiveAbschlussarbeit.putExtra("idUser", userId);
+        intentAktiveAbschlussarbeit.putExtra("aktiverUser", userId);
         intentAktiveAbschlussarbeit.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentAktiveAbschlussarbeit);
     }

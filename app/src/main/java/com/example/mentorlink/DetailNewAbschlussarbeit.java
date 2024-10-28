@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
     private Button btnDetailNewAbschlussarbeitLoeschen;
     private EditText edtDetailNewAbschlussarbeitKurzbeschreibung;
     private EditText edtDetailNewAbschlussarbeitUeberschrift;
+    private ImageButton btnBack;
 
     private TextView tvDetailNewAbschlussarbeitUeberschrift;
     private TextView tvDetailNewAbschlussarbeitBetreuer;
@@ -68,6 +70,7 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
         edtDetailNewAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailNewAbschlussarbeitKurzbeschreibung);
         tvDetailNewAbschlussarbeitBetreuer = findViewById(R.id.tvDetailNewAbschlussarbeitBetreuerName);
         edtDetailNewAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailNewAbschlussarbeitUeberschrift);
+        btnBack = findViewById(R.id.btn_zurueck);
 
         //TODO Hardcoded User, hier muss der angemeldete hin
 
@@ -90,6 +93,15 @@ public class DetailNewAbschlussarbeit extends AppCompatActivity {
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
 
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
+                startActivity(i);
+            }
+        });
 
         btnDetailNewAbschlussarbeitSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
             @Override

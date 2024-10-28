@@ -548,6 +548,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -596,6 +597,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -643,6 +645,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -666,6 +669,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 }
             } catch (Exception throwables) {
                 throwables.printStackTrace();
+                Log.d("SQL-Fehler", throwables.getMessage());
             }
         }
         else {
@@ -692,6 +696,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -140,163 +141,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public User getUser() {
 
         User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_FIRST + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-
-    //nach ID Filtern um eine Person anzuzeigen
-
-    public User getUserNachID(int userID) {
-
-        User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " = " + userID + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-    //nach ID Filtern um eine Person anzuzeigen
-
-    public User getUserNachMail(String email) {
-
-        User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String mailForQuery = "'" + email + "'";
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-    //alle User nach Rolle Filtern
-
-    public ArrayList<User> getUsersNachRolle(int rolle) {
-
-        ArrayList<User> users = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ROLLE + " = " + rolle;
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(cursor.getInt(0));
-                user.setVorname(cursor.getString(1));
-                user.setNachname(cursor.getString(2));
-                user.setMail(cursor.getString(3));
-                user.setPasswort(cursor.getString(4));
-                user.setTeamsUser("");
-                user.setRolle(cursor.getInt(6));
-                user.setAuslastung(cursor.getInt(7));
-                user.setFachbereiche(cursor.getString(8));
-                users.add(user);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-        }
-        return users;
-    }
-
-    //alle User nach Fachbereiche Filtern
-
-    public ArrayList<User> getUsersNachFachbereich(String fachbereich) {
-
-        ArrayList<User> users = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_FACHBEREICHE + " = " + fachbereich;
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(cursor.getInt(0));
-                user.setVorname(cursor.getString(1));
-                user.setNachname(cursor.getString(2));
-                user.setMail(cursor.getString(3));
-                user.setPasswort(cursor.getString(4));
-                user.setTeamsUser(cursor.getString(5));
-                user.setRolle(cursor.getInt(6));
-                user.setAuslastung(cursor.getInt(7));
-                user.setFachbereiche(cursor.getString(8));
-                users.add(user);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-        }
-        return users;
-    }
-
-    public User checkPassword(String email, String password)
-    {
-        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
-        String mailForQuery = "'" + email + "'";
-        User user = new User();
-
-        try{
-            Class.forName(Classes_SQL);
-            connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
-        }
-        catch(ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
         if(connection!=null)
         {
@@ -306,8 +153,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
                         col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
-                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
-                        " WHERE " + col_EMAIL + " = " + mailForQuery + " AND " + col_PASSWORT + " = " + hashedPassword);
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST);
                 if((resultSet.next()))
                 {
                     user.setId(resultSet.getInt(1));
@@ -326,50 +172,204 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         else
         {
-            Log.d("Login-Fehler", "Fehler beim Login des Users.");
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
         }
         return user;
     }
 
-    /*public User checkPassword(String email, String password) {
 
-        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachID(int userID) {
 
         User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String mailForQuery = "'" + email + "'";
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-
-        if (user.getPasswort().equals(hashedPassword))
+        if(connection!=null)
         {
-            return user;
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_ID + " = " + userID);
+                if((resultSet.next()))
+                {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         else
         {
-            return new User();
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
         }
-    }*/
+        return user;
+    }
 
-    private static String get_SHA_256_SecurePassword(String passwordToHash,
-                                                     String salt) {
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachMail(String email) {
+
+        User user = new User();
+        String mailForQuery = "'" + email + "'";
+
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if(connection!=null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_EMAIL + " = " + mailForQuery);
+                if((resultSet.next()))
+                {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else
+        {
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
+        }
+        return user;
+    }
+
+    //alle User nach Rolle Filtern
+
+    public ArrayList<User> getUsersNachRolle(int rolle) {
+
+        ArrayList<User> users = new ArrayList<>();
+
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if(connection!=null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_ROLLE + " = " + rolle);
+                if((resultSet.next()))
+                {
+                    do {
+                        User user = new User();
+                        user.setId(resultSet.getInt(1));
+                        user.setVorname(resultSet.getString(2));
+                        user.setNachname(resultSet.getString(3));
+                        user.setMail(resultSet.getString(4));
+                        user.setPasswort(resultSet.getString(5));
+                        user.setTeamsUser(resultSet.getString(6));
+                        user.setRolle(resultSet.getInt(7));
+                        user.setAuslastung(resultSet.getInt(8));
+                        user.setFachbereiche(resultSet.getString(9));
+                        users.add(user);
+                    } while (resultSet.next());
+
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else
+        {
+            Log.d("Keine User gefunden", "User konnten nicht geladen werden.");
+        }
+        return users;
+    }
+
+    public User checkPassword(String email, String password) {
+
+        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+        User user = new User();
+//        String mailForQuery = "'" + email + "'";
+
+        try {
+			Class.forName(Classes_SQL);
+			connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+		} 	catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+
+            try {
+                String query = "SELECT TOP(1) " + col_ID + ", " + col_VORNAME + ", " + col_NACHNAME + ", " +
+                        col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " + col_ROLLE +
+                        ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_EMAIL + " = ? AND " + col_PASSWORT + " = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, hashedPassword);
+
+                resultSet = preparedStatement.executeQuery();
+
+                if ((resultSet.next())) {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));
+                    ;
+                } else {
+                    System.out.println("Benutzer nicht gefunden oder Passwort stimmt nicht überein.");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } finally {
+                try {
+                    if (resultSet != null) resultSet.close();
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return user;
+    }
+
+    private static String get_SHA_256_SecurePassword(String passwordToHash, String salt) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -394,21 +394,48 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void updateUser(User user) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch (ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        ContentValues values = new ContentValues();
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+                    col_VORNAME + " = ?, " +
+                    col_NACHNAME + " = ?, " +
+                    col_EMAIL + " = ?, " +
+                    col_PASSWORT + " = ?, " +
+                    col_TEAMSNAME + " = ?, " +
+                    col_ROLLE + " = ?, " +
+                    col_AUSLASTUNG + " = ?, " +
+                    col_FACHBEREICHE + " = ? " +
+                    "WHERE " + col_ID + " = ?";
 
-        values.put(col_VORNAME, user.getVorname());
-        values.put(col_NACHNAME, user.getNachname());
-        values.put(col_EMAIL, user.getMail());
-        values.put(col_PASSWORT, user.getPasswort());
-        values.put(col_TEAMSNAME, user.getTeamsUser());
-        values.put(col_ROLLE, user.getRolle());
-        values.put(col_AUSLASTUNG, user.getAuslastung());
-        values.put(col_FACHBEREICHE, user.getFachbereiche());
+            try {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setString(1, user.getVorname());
+                preparedStatement.setString(2, user.getNachname());
+                preparedStatement.setString(3, user.getMail());
+                preparedStatement.setString(4, user.getPasswort());
+                preparedStatement.setString(5, user.getTeamsUser());
+                preparedStatement.setInt(6, user.getRolle());
+                preparedStatement.setInt(7, user.getAuslastung());
+                preparedStatement.setString(8, user.getFachbereiche());
+                preparedStatement.setInt(9, user.getId());
 
-        db.update(Table_FIRST, values, col_ID + "= " + user.getId(), null);
-        db.close();
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 
     /**********************************************************************************************
@@ -417,84 +444,137 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Abschlussarbeit getAbschlussarbeit() {
 
+
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
-        String query = "SELECT * FROM " + Table_SECOND + " LIMIT 1";
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            abschlussarbeit.setId(cursor.getInt(0));
-            abschlussarbeit.setKategorie(cursor.getInt(1));
-            abschlussarbeit.setUeberschrift(cursor.getString(2));
-            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-            abschlussarbeit.setStudent(cursor.getInt(4));
-            abschlussarbeit.setBetreuer(cursor.getInt(5));
-            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-            abschlussarbeit.setStatus(cursor.getInt(7));
-
-            cursor.close();
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND);
+                if(resultSet.next())
+                {
+                    do {
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeit;
     }
+
 
     //getAbschlussarbeit mit Parameter UserID (einzeln und mehrere zurückgeben)
 
     public Abschlussarbeit getAbschlussarbeitNachUserID(int userID) {
 
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_SECOND
-                + " WHERE " + col_STUDENT + " = " + userID
-                + " OR " + col_BETREUER + " = " + userID
-                + " OR " + col_ZWEITGUTACHTER + " = " + userID + " LIMIT 1";
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        Cursor cursor = db.rawQuery(query, null);
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1) " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE " + col_STUDENT + " = " + userID +
+                        " OR " + col_BETREUER + " = " + userID +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID);
+                if((resultSet.next()))
+                {
+                    abschlussarbeit.setId(resultSet.getInt(1));
+                    abschlussarbeit.setKategorie(resultSet.getInt(2));
+                    abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                    abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                    abschlussarbeit.setStudent(resultSet.getInt(5));
+                    abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                    abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                    abschlussarbeit.setStatus(resultSet.getInt(8));
+                }
 
-        if (cursor != null && cursor.moveToFirst()) {
-            abschlussarbeit.setId(cursor.getInt(0));
-            abschlussarbeit.setKategorie(cursor.getInt(1));
-            abschlussarbeit.setUeberschrift(cursor.getString(2));
-            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-            abschlussarbeit.setStudent(cursor.getInt(4));
-            abschlussarbeit.setBetreuer(cursor.getInt(5));
-            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-            abschlussarbeit.setStatus(cursor.getInt(7));
-
-            cursor.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeit;
     }
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserID(int userID) {
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
-        String query = "SELECT * FROM " + Table_SECOND
-                + " WHERE " + col_STUDENT + " = " + userID
-                + " OR " + col_BETREUER + " = " + userID
-                + " OR " + col_ZWEITGUTACHTER + " = " + userID;
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-                abschlussarbeit.setId(cursor.getInt(0));
-                abschlussarbeit.setKategorie(cursor.getInt(1));
-                abschlussarbeit.setUeberschrift(cursor.getString(2));
-                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-                abschlussarbeit.setStudent(cursor.getInt(4));
-                abschlussarbeit.setBetreuer(cursor.getInt(5));
-                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-                abschlussarbeit.setStatus(cursor.getInt(7));
-                abschlussarbeiten.add(abschlussarbeit);
-            } while (cursor.moveToNext());
-
-            cursor.close();
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE " + col_STUDENT + " = " + userID +
+                        " OR " + col_BETREUER + " = " + userID +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID);
+                if(resultSet.next())
+                {
+                    do {
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeiten;
     }
@@ -503,65 +583,93 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserIDUndStatus(int userID, int status) {
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
-        String query = "SELECT * FROM " + Table_SECOND
-                + " WHERE " + "(" + col_STUDENT + " = " + userID
-                + " OR " + col_BETREUER + " = " + userID
-                + " OR " + col_ZWEITGUTACHTER + " = " + userID + ")"
-                + " AND " + col_STATUS + " = " + status;
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-                abschlussarbeit.setId(cursor.getInt(0));
-                abschlussarbeit.setKategorie(cursor.getInt(1));
-                abschlussarbeit.setUeberschrift(cursor.getString(2));
-                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-                abschlussarbeit.setStudent(cursor.getInt(4));
-                abschlussarbeit.setBetreuer(cursor.getInt(5));
-                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-                abschlussarbeit.setStatus(cursor.getInt(7));
-                abschlussarbeiten.add(abschlussarbeit);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE "  + "(" + col_STUDENT + " = " + userID +
+                        " OR " + col_BETREUER + " = " + userID +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
+                        " AND " + col_STATUS + " = " + status);
+                if(resultSet.next())
+                {
+                    do {
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeiten;
     }
 
     public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
-        String query = "SELECT * FROM " + Table_SECOND
-                + " WHERE " + "(" + col_BETREUER + " = " + userID
-                + " OR " + col_ZWEITGUTACHTER + " = " + userID + ")"
-                + " AND " + col_STATUS + " IS NOT " + 1;
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-                abschlussarbeit.setId(cursor.getInt(0));
-                abschlussarbeit.setKategorie(cursor.getInt(1));
-                abschlussarbeit.setUeberschrift(cursor.getString(2));
-                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-                abschlussarbeit.setStudent(cursor.getInt(4));
-                abschlussarbeit.setBetreuer(cursor.getInt(5));
-                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-                abschlussarbeit.setStatus(cursor.getInt(7));
-                abschlussarbeiten.add(abschlussarbeit);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE "  + "(" + col_BETREUER + " = " + userID +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
+                        " AND " + col_STATUS + " != " + 1);
+                if(resultSet.next())
+                {
+                    do {
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeiten;
     }
@@ -571,27 +679,44 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachStatus(int status) {
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
+        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
-        String query = "SELECT * FROM " + Table_SECOND + " WHERE " + col_STATUS + " = " + status;
-        Cursor cursor = db.rawQuery(query, null);
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-                abschlussarbeit.setId(cursor.getInt(0));
-                abschlussarbeit.setKategorie(cursor.getInt(1));
-                abschlussarbeit.setUeberschrift(cursor.getString(2));
-                abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-                abschlussarbeit.setStudent(cursor.getInt(4));
-                abschlussarbeit.setBetreuer(cursor.getInt(5));
-                abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-                abschlussarbeit.setStatus(cursor.getInt(7));
-                abschlussarbeiten.add(abschlussarbeit);
-            } while (cursor.moveToNext());
-
-            cursor.close();
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE " + col_STATUS + " = " + status);
+                if(resultSet.next())
+                {
+                    do {
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeiten;
     }
@@ -601,22 +726,40 @@ public class DBHandler extends SQLiteOpenHelper {
     public Abschlussarbeit getAbschlussarbeitNachID(int id) {
 
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_SECOND + " WHERE " + col_ID_ABSCHLUSSARBEITEN + " = " + id + " LIMIT 1";
-        Cursor cursor = db.rawQuery(query, null);
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        if (cursor != null && cursor.moveToFirst()) {
-            abschlussarbeit.setId(cursor.getInt(0));
-            abschlussarbeit.setKategorie(cursor.getInt(1));
-            abschlussarbeit.setUeberschrift(cursor.getString(2));
-            abschlussarbeit.setKurzbeschreibung(cursor.getString(3));
-            abschlussarbeit.setStudent(cursor.getInt(4));
-            abschlussarbeit.setBetreuer(cursor.getInt(5));
-            abschlussarbeit.setZweitgutachter(cursor.getInt(6));
-            abschlussarbeit.setStatus(cursor.getInt(7));
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1) " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE " + col_ID_ABSCHLUSSARBEITEN + " = " + id);
+                if((resultSet.next()))
+                {
+                    abschlussarbeit.setId(resultSet.getInt(1));
+                    abschlussarbeit.setKategorie(resultSet.getInt(2));
+                    abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                    abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                    abschlussarbeit.setStudent(resultSet.getInt(5));
+                    abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                    abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                    abschlussarbeit.setStatus(resultSet.getInt(8));
+                }
 
-            cursor.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
         }
         return abschlussarbeit;
     }
@@ -627,20 +770,51 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void updateAbschlussarbeit(Abschlussarbeit abschlussarbeit) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(col_KATEGORIE, abschlussarbeit.getKategorie());
-        values.put(col_UEBERSCHRIFT, abschlussarbeit.getUeberschrift());
-        values.put(col_KURZBESCHREIBUNG, abschlussarbeit.getKurzbeschreibung());
-        values.put(col_STUDENT, abschlussarbeit.getStudent());
-        values.put(col_BETREUER, abschlussarbeit.getBetreuer());
-        values.put(col_ZWEITGUTACHTER, abschlussarbeit.getZweitgutachter());
-        values.put(col_STATUS, abschlussarbeit.getStatus());
-
-        db.update(Table_SECOND, values, col_ID_ABSCHLUSSARBEITEN + "= " + abschlussarbeit.getId(), null);
-        db.close();
+        try {
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        }
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+        catch (SQLException throwables) {throwables.printStackTrace();}
+        if (connection != null)
+        {        PreparedStatement preparedStatement = null;
+            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+                    col_KATEGORIE + " = ?, " +
+                    col_UEBERSCHRIFT + " = ?, " +
+                    col_KURZBESCHREIBUNG + " = ?, " +
+                    col_STUDENT + " = ?, " +
+                    col_BETREUER + " = ?, " +
+                    col_ZWEITGUTACHTER + " = ?, " +
+                    col_STATUS + " = ?, " +
+                    "WHERE " + col_ID_ABSCHLUSSARBEITEN + " = ?";
+            try
+            {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setInt(1, abschlussarbeit.getKategorie());
+                preparedStatement.setString(2, abschlussarbeit.getUeberschrift());
+                preparedStatement.setString(3, abschlussarbeit.getKurzbeschreibung());
+                preparedStatement.setInt(4, abschlussarbeit.getStudent());
+                preparedStatement.setInt(5, abschlussarbeit.getBetreuer());
+                preparedStatement.setInt(6, abschlussarbeit.getZweitgutachter());
+                preparedStatement.setInt(7, abschlussarbeit.getStatus());
+                preparedStatement.setInt(8, abschlussarbeit.getId());
+                preparedStatement.executeUpdate();
+            }
+            catch (SQLException e) {e.printStackTrace();}
+            finally
+            {
+                try
+                {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        } else
+        {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 
     /**********************************************************************************************

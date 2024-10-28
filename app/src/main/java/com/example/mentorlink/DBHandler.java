@@ -314,7 +314,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
         User user = new User();
-//        String mailForQuery = "'" + email + "'";
+        String mailForQuery = "'" + email + "'";
 
         try {
 			Class.forName(Classes_SQL);
@@ -333,10 +333,10 @@ public class DBHandler extends SQLiteOpenHelper {
                 String query = "SELECT TOP(1) " + col_ID + ", " + col_VORNAME + ", " + col_NACHNAME + ", " +
                         col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " + col_ROLLE +
                         ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
-                        " WHERE " + col_EMAIL + " = ? AND " + col_PASSWORT + " = ?";
+                        " WHERE " + col_EMAIL + " = " + mailForQuery + " AND " + col_PASSWORT + " = " + hashedPassword;
                 preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, hashedPassword);
+                /*preparedStatement.setString(1, mailForQuery);
+                preparedStatement.setString(2, hashedPassword);*/
 
                 resultSet = preparedStatement.executeQuery();
 

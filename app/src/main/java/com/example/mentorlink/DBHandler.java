@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -737,20 +738,51 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void updateAbschlussarbeit(Abschlussarbeit abschlussarbeit) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(col_KATEGORIE, abschlussarbeit.getKategorie());
-        values.put(col_UEBERSCHRIFT, abschlussarbeit.getUeberschrift());
-        values.put(col_KURZBESCHREIBUNG, abschlussarbeit.getKurzbeschreibung());
-        values.put(col_STUDENT, abschlussarbeit.getStudent());
-        values.put(col_BETREUER, abschlussarbeit.getBetreuer());
-        values.put(col_ZWEITGUTACHTER, abschlussarbeit.getZweitgutachter());
-        values.put(col_STATUS, abschlussarbeit.getStatus());
-
-        db.update(Table_SECOND, values, col_ID_ABSCHLUSSARBEITEN + "= " + abschlussarbeit.getId(), null);
-        db.close();
+        try {
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        }
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+        catch (SQLException throwables) {throwables.printStackTrace();}
+        if (connection != null)
+        {        PreparedStatement preparedStatement = null;
+            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+                    col_KATEGORIE + " = ?, " +
+                    col_UEBERSCHRIFT + " = ?, " +
+                    col_KURZBESCHREIBUNG + " = ?, " +
+                    col_STUDENT + " = ?, " +
+                    col_BETREUER + " = ?, " +
+                    col_ZWEITGUTACHTER + " = ?, " +
+                    col_STATUS + " = ?, " +
+                    "WHERE " + col_ID_ABSCHLUSSARBEITEN + " = ?";
+            try
+            {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setInt(1, abschlussarbeit.getKategorie());
+                preparedStatement.setString(2, abschlussarbeit.getUeberschrift());
+                preparedStatement.setString(3, abschlussarbeit.getKurzbeschreibung());
+                preparedStatement.setInt(4, abschlussarbeit.getStudent());
+                preparedStatement.setInt(5, abschlussarbeit.getBetreuer());
+                preparedStatement.setInt(6, abschlussarbeit.getZweitgutachter());
+                preparedStatement.setInt(7, abschlussarbeit.getStatus());
+                preparedStatement.setInt(8, abschlussarbeit.getId());
+                preparedStatement.executeUpdate();
+            }
+            catch (SQLException e) {e.printStackTrace();}
+            finally
+            {
+                try
+                {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        } else
+        {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 
     /**********************************************************************************************

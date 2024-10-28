@@ -141,157 +141,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public User getUser() {
 
         User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + Table_FIRST + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-
-    //nach ID Filtern um eine Person anzuzeigen
-
-    public User getUserNachID(int userID) {
-
-        User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ID + " = " + userID + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-    //nach ID Filtern um eine Person anzuzeigen
-
-    public User getUserNachMail(String email) {
-
-        User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String mailForQuery = "'" + email + "'";
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-        return user;
-    }
-
-    //alle User nach Rolle Filtern
-
-    public ArrayList<User> getUsersNachRolle(int rolle) {
-
-        ArrayList<User> users = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_ROLLE + " = " + rolle;
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(cursor.getInt(0));
-                user.setVorname(cursor.getString(1));
-                user.setNachname(cursor.getString(2));
-                user.setMail(cursor.getString(3));
-                user.setPasswort(cursor.getString(4));
-                user.setTeamsUser("");
-                user.setRolle(cursor.getInt(6));
-                user.setAuslastung(cursor.getInt(7));
-                user.setFachbereiche(cursor.getString(8));
-                users.add(user);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-        }
-        return users;
-    }
-
-    //alle User nach Fachbereiche Filtern
-
-    public ArrayList<User> getUsersNachFachbereich(String fachbereich) {
-
-        ArrayList<User> users = new ArrayList<>();
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_FACHBEREICHE + " = " + fachbereich;
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(cursor.getInt(0));
-                user.setVorname(cursor.getString(1));
-                user.setNachname(cursor.getString(2));
-                user.setMail(cursor.getString(3));
-                user.setPasswort(cursor.getString(4));
-                user.setTeamsUser(cursor.getString(5));
-                user.setRolle(cursor.getInt(6));
-                user.setAuslastung(cursor.getInt(7));
-                user.setFachbereiche(cursor.getString(8));
-                users.add(user);
-            } while (cursor.moveToNext());
-
-            cursor.close();
-        }
-        return users;
-    }
-
-    public User checkPassword(String email, String password)
-    {
-        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
-        String mailForQuery = "'" + email + "'";
-        User user = new User();
-
-        try{
-            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
-        catch(ClassNotFoundException e)
-        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
         if(connection!=null)
         {
@@ -301,8 +153,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
                         col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
-                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
-                        " WHERE " + col_EMAIL + " = " + mailForQuery + " AND " + col_PASSWORT + " = " + hashedPassword);
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST);
                 if((resultSet.next()))
                 {
                     user.setId(resultSet.getInt(1));
@@ -321,50 +172,204 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         else
         {
-            Log.d("Login-Fehler", "Fehler beim Login des Users.");
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
         }
         return user;
     }
 
-    /*public User checkPassword(String email, String password) {
 
-        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachID(int userID) {
 
         User user = new User();
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        String mailForQuery = "'" + email + "'";
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        String query = "SELECT * FROM " + Table_FIRST + " WHERE " + col_EMAIL + " = " + mailForQuery + " LIMIT 1";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            user.setId(cursor.getInt(0));
-            user.setVorname(cursor.getString(1));
-            user.setNachname(cursor.getString(2));
-            user.setMail(cursor.getString(3));
-            user.setPasswort(cursor.getString(4));
-            user.setTeamsUser(cursor.getString(5));
-            user.setRolle(cursor.getInt(6));
-            user.setAuslastung(cursor.getInt(7));
-            user.setFachbereiche(cursor.getString(8));
-
-            cursor.close();
-        }
-
-        if (user.getPasswort().equals(hashedPassword))
+        if(connection!=null)
         {
-            return user;
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_ID + " = " + userID);
+                if((resultSet.next()))
+                {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         else
         {
-            return new User();
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
         }
-    }*/
+        return user;
+    }
 
-    private static String get_SHA_256_SecurePassword(String passwordToHash,
-                                                     String salt) {
+    //nach ID Filtern um eine Person anzuzeigen
+
+    public User getUserNachMail(String email) {
+
+        User user = new User();
+        String mailForQuery = "'" + email + "'";
+
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if(connection!=null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_EMAIL + " = " + mailForQuery);
+                if((resultSet.next()))
+                {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else
+        {
+            Log.d("User nicht gefunden", "User konnte nicht geladen werden.");
+        }
+        return user;
+    }
+
+    //alle User nach Rolle Filtern
+
+    public ArrayList<User> getUsersNachRolle(int rolle) {
+
+        ArrayList<User> users = new ArrayList<>();
+
+        try{ Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch(ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if(connection!=null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_ROLLE + " = " + rolle);
+                if((resultSet.next()))
+                {
+                    do {
+                        User user = new User();
+                        user.setId(resultSet.getInt(1));
+                        user.setVorname(resultSet.getString(2));
+                        user.setNachname(resultSet.getString(3));
+                        user.setMail(resultSet.getString(4));
+                        user.setPasswort(resultSet.getString(5));
+                        user.setTeamsUser(resultSet.getString(6));
+                        user.setRolle(resultSet.getInt(7));
+                        user.setAuslastung(resultSet.getInt(8));
+                        user.setFachbereiche(resultSet.getString(9));
+                        users.add(user);
+                    } while (resultSet.next());
+
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else
+        {
+            Log.d("Keine User gefunden", "User konnten nicht geladen werden.");
+        }
+        return users;
+    }
+
+    public User checkPassword(String email, String password) {
+
+        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+        User user = new User();
+//        String mailForQuery = "'" + email + "'";
+
+        try {
+			Class.forName(Classes_SQL);
+			connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+		} 	catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+
+            try {
+                String query = "SELECT TOP(1) " + col_ID + ", " + col_VORNAME + ", " + col_NACHNAME + ", " +
+                        col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " + col_ROLLE +
+                        ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_EMAIL + " = ? AND " + col_PASSWORT + " = ?";
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, hashedPassword);
+
+                resultSet = preparedStatement.executeQuery();
+
+                if ((resultSet.next())) {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));
+                    ;
+                } else {
+                    System.out.println("Benutzer nicht gefunden oder Passwort stimmt nicht überein.");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } finally {
+                try {
+                    if (resultSet != null) resultSet.close();
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return user;
+    }
+
+    private static String get_SHA_256_SecurePassword(String passwordToHash, String salt) {
         String generatedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -389,21 +394,48 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public void updateUser(User user) {
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        try {Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch (ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
 
-        ContentValues values = new ContentValues();
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+                    col_VORNAME + " = ?, " +
+                    col_NACHNAME + " = ?, " +
+                    col_EMAIL + " = ?, " +
+                    col_PASSWORT + " = ?, " +
+                    col_TEAMSNAME + " = ?, " +
+                    col_ROLLE + " = ?, " +
+                    col_AUSLASTUNG + " = ?, " +
+                    col_FACHBEREICHE + " = ? " +
+                    "WHERE " + col_ID + " = ?";
 
-        values.put(col_VORNAME, user.getVorname());
-        values.put(col_NACHNAME, user.getNachname());
-        values.put(col_EMAIL, user.getMail());
-        values.put(col_PASSWORT, user.getPasswort());
-        values.put(col_TEAMSNAME, user.getTeamsUser());
-        values.put(col_ROLLE, user.getRolle());
-        values.put(col_AUSLASTUNG, user.getAuslastung());
-        values.put(col_FACHBEREICHE, user.getFachbereiche());
+            try {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setString(1, user.getVorname());
+                preparedStatement.setString(2, user.getNachname());
+                preparedStatement.setString(3, user.getMail());
+                preparedStatement.setString(4, user.getPasswort());
+                preparedStatement.setString(5, user.getTeamsUser());
+                preparedStatement.setInt(6, user.getRolle());
+                preparedStatement.setInt(7, user.getAuslastung());
+                preparedStatement.setString(8, user.getFachbereiche());
+                preparedStatement.setInt(9, user.getId());
 
-        db.update(Table_FIRST, values, col_ID + "= " + user.getId(), null);
-        db.close();
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 
     /**********************************************************************************************

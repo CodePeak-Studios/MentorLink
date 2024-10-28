@@ -5,10 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,13 +30,13 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final int DB_Version = 1;
 
     //Tabelle für den User (Studenten und Betreuer)
-    private static final String Table_FIRST = "User";
+    private static final String Table_FIRST = "[MentorLink].[dbo].[User]"; //A
     private static final String col_ID = "id";
     private static final String col_VORNAME = "vorname";
     private static final String col_NACHNAME = "nachname";
     private static final String col_EMAIL = "email";
     private static final String col_PASSWORT = "passwort";
-    private static final String col_TEAMSNAME = "teamsName";
+    private static final String col_TEAMSNAME = "teamsname"; //A
     private static final String col_ROLLE = "rolle";
     private static final String col_AUSLASTUNG = "auslastung";
     private static final String col_FACHBEREICHE = "fachbereiche";
@@ -45,12 +55,22 @@ public class DBHandler extends SQLiteOpenHelper {
     //Tabelle für alle Status-Möglichkeiten der Abschlussarbeiten
     private static final String Table_THIRD = "Status";
     private static final String col_ID_STATUS = "id";
-    private static final String col_STATUS_NAME = "statusName";
+    private static final String col_STATUS_NAME = "statusname"; //A
 
     //Tabelle für alle Kategorien/Themengebiete der Hochschule
     private static final String Table_FOURTH = "Kategorien";
     private static final String col_ID_KATEGORIEN = "id";
-    private static final String col_KATEGORIEN_NAME = "kategorieName";
+    private static final String col_KATEGORIEN_NAME = "kategoriename"; //A
+
+
+    private static String ip_SQL = "192.168.178.31";// this is the host ip that your data base exists on you can use 10.0.2.2 for local host found on your pc. use if config for windows to find the ip if the database exists on your pc
+    private static String port_SQL = "1433";// the port sql server runs on
+    private static String Classes_SQL = "net.sourceforge.jtds.jdbc.Driver";// the driver that is required for this connection
+    private static String database_SQL = "MentorLink";// the data base name
+    private static String username_SQL = "mentorapp";// the user name
+    private static String password_SQL = "password";// the password
+    private static String url_SQL = "jdbc:jtds:sqlserver://"+ip_SQL+":"+port_SQL+"/"+database_SQL; // the connection url string
+    private Connection connection = null;
 
     public DBHandler (Context context) {
         super(context, DB_Name, null, DB_Version);
@@ -141,6 +161,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         return user;
     }
+
 
     //nach ID Filtern um eine Person anzuzeigen
 
@@ -260,8 +281,57 @@ public class DBHandler extends SQLiteOpenHelper {
         return users;
     }
 
+    public User checkPassword(String email, String password)
+    {
+        String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
+        String mailForQuery = "'" + email + "'";
+        User user = new User();
 
-    public User checkPassword(String email, String password) {
+        try{
+            Class.forName(Classes_SQL);
+            connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        if(connection!=null)
+        {
+            Statement statement = null;
+
+            try {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT TOP(1)" + col_ID + ", " + col_VORNAME + ", " +
+                        col_NACHNAME + ", " + col_EMAIL + ", " + col_PASSWORT + ", " + col_TEAMSNAME + ", " +
+                        col_ROLLE + ", " + col_AUSLASTUNG + ", " + col_FACHBEREICHE + " FROM " + Table_FIRST +
+                        " WHERE " + col_EMAIL + " = " + mailForQuery + " AND " + col_PASSWORT + " = " + hashedPassword);
+                if((resultSet.next()))
+                {
+                    user.setId(resultSet.getInt(1));
+                    user.setVorname(resultSet.getString(2));
+                    user.setNachname(resultSet.getString(3));
+                    user.setMail(resultSet.getString(4));
+                    user.setPasswort(resultSet.getString(5));
+                    user.setTeamsUser(resultSet.getString(6));
+                    user.setRolle(resultSet.getInt(7));
+                    user.setAuslastung(resultSet.getInt(8));
+                    user.setFachbereiche(resultSet.getString(9));;
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else
+        {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
+        }
+        return user;
+    }
+
+    /*public User checkPassword(String email, String password) {
 
         String hashedPassword = get_SHA_256_SecurePassword(password, "sprachmeister");
 
@@ -296,7 +366,7 @@ public class DBHandler extends SQLiteOpenHelper {
         {
             return new User();
         }
-    }
+    }*/
 
     private static String get_SHA_256_SecurePassword(String passwordToHash,
                                                      String salt) {
@@ -310,10 +380,11 @@ public class DBHandler extends SQLiteOpenHelper {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16)
                         .substring(1));
             }
-            generatedPassword = sb.toString();
+            generatedPassword = "'" + sb.toString() + "'";
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+
         return generatedPassword;
     }
 
@@ -605,7 +676,4 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.close();
     }
-
-
-
 }

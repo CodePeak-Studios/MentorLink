@@ -3,9 +3,12 @@ package com.example.mentorlink;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,12 +18,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Profilseite extends AppCompatActivity {
+public class Profilseite extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ImageButton btn_zurueck;
     private TextView tvProfilName;
     private TextView tvProfilEmail;
-    private TextView tvProfilAuslastung;
     private TextView tvProfilFachbereiche;
     private EditText etFachbereiche;
     private Button editFachbereicheBtn;
@@ -44,7 +46,6 @@ public class Profilseite extends AppCompatActivity {
         btn_zurueck = findViewById(R.id.btn_zurueck);
         tvProfilName = findViewById(R.id.tvProfilseiteName);
         tvProfilEmail = findViewById(R.id.tvProfilseiteEmail);
-        tvProfilAuslastung = findViewById(R.id.tvProfilseiteAuslastung);
         tvProfilFachbereiche = findViewById(R.id.tvProfilseiteFachbereiche);
         etFachbereiche = findViewById(R.id.editFachbereicheInput);
         editFachbereicheBtn = findViewById(R.id.editFachbereichBtn);
@@ -68,8 +69,16 @@ public class Profilseite extends AppCompatActivity {
         String kompletterName = user.getVorname() + " " + user.getNachname();
         tvProfilName.setText(kompletterName);
         tvProfilEmail.setText(user.getMail());
-        tvProfilAuslastung.setText(user.getAuslastungsString(user.getAuslastung()));
         tvProfilFachbereiche.setText(user.getFachbereiche());
+
+        Spinner dropdown = findViewById(R.id.spinnerAuslastung);
+        String[] items = new String[]{"Frei", "Beschäftigt", "Ausgelastet"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, items);
+        dropdown.setAdapter(adapter);
+
+        setSpinnerAufAktuelleAuslastung(dropdown, user.getAuslastung());
+
+        dropdown.setOnItemSelectedListener(this);
 
         editFachbereicheBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,5 +107,60 @@ public class Profilseite extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setSpinnerAufAktuelleAuslastung(Spinner spinner, int aktuelleAuslastung) {
+        switch (aktuelleAuslastung) {
+            case 0:
+                spinner.setSelection(0);
+                break;
+            case 1:
+                spinner.setSelection(1);
+                break;
+            case 2:
+                spinner.setSelection(2);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String choice = parent.getItemAtPosition(position).toString();
+        int neueAuslastung;
+        switch (choice) {
+            case "Frei":
+                neueAuslastung = 0;
+                break;
+            case "Beschäftigt":
+                neueAuslastung = 1;
+                break;
+            case "Ausgelastet":
+                neueAuslastung = 2;
+                break;
+            default:
+                return;
+        }
+        if (neueAuslastung != user.getAuslastung()) {
+            dbHandler.updateAuslastung(neueAuslastung, userId);
+            user.setAuslastung(neueAuslastung);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        int aktuelleAuslastung = user.getAuslastung();
+        switch (aktuelleAuslastung) {
+            case 0:
+                parent.setSelection(0);
+                break;
+            case 1:
+                parent.setSelection(1);
+                break;
+            case 2:
+                parent.setSelection(2);
+                break;
+            default:
+                break;
+        }
     }
 }

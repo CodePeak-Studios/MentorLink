@@ -127,17 +127,11 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvProfilseiteAuslastung"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinnerAuslastung"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/roboto"
-                android:text="Ausgelastet"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout

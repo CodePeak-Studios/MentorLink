@@ -36,7 +36,7 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
         });
 
         Intent intent = getIntent();
-        int betreuerID = intent.getIntExtra("betreuerID", 0);
+        int betreuerID = intent.getIntExtra("betreuerID", -1);
         userId = intent.getIntExtra("aktiverUser", -1);
 
         betreuerID++;
@@ -74,15 +74,16 @@ public class DetailBetreuer extends AppCompatActivity implements RecyclerViewAda
 
     }
 
-        public void onItemClick(View view, int position) {
-        int betreuerID = adapter.getBetreuerID(position);
+    public void onItemClick(View view, int position) {
+        int betreuerID = adapter.getBetreuerID(position -1);
+        int abschlussarbeitID = adapter.getAbschlussarbeitID(position - 1);
         String emailBetreuer = dbHandler.getUserNachID(betreuerID).getMail();
-        String betreuerNachname = dbHandler.getUserNachID(betreuerID).getNachname();
+        String betreuerName = dbHandler.getUserNachID(betreuerID).getVorname() + " " + dbHandler.getUserNachID(betreuerID).getNachname();
 
-        int abschlussarbeitID = adapter.getAbschlussarbeitID(position);
+
         String themaString = "Anmeldung zu Abschlussarbeit-Thema: " + dbHandler.getAbschlussarbeitNachID(abschlussarbeitID).getUeberschrift();
 
-        String beispielMailString = "Guten Tag Herr " + betreuerNachname + ",\n\nhiermit melde ich mich zu dem folgenden Thema an:\n\n"
+        String beispielMailString = "Hallo " + betreuerName + ",\n\nhiermit melde ich mich zu dem folgenden Thema an:\n\n"
                 + dbHandler.getAbschlussarbeitNachID(abschlussarbeitID).getUeberschrift()
                 + "\n \nBitte bestätigen Sie mir die Anmeldung, damit mit der Bearbeitung gestartet werden kann.\n\n" +
                 "Mit freundlichen Grüßen\n";

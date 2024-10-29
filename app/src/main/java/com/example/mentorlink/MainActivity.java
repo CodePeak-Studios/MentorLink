@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartMeineThemen;
     private Button btnStartArchiv;
     private ImageButton logoutBtn;
+    private ImageButton profilseiteBtn;
     private TextView tvBegruessung;
     private int userId;
     private User user;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         btnStartArchiv = findViewById(R.id.btnStartArchiv);
         logoutBtn = findViewById(R.id.logoutButton);
         tvBegruessung = findViewById(R.id.halloNachricht);
+        profilseiteBtn = findViewById(R.id.profilseite_btn);
 
         dbHandler = new DBHandler(this);
         dbHandler.getWritableDatabase();
@@ -110,6 +112,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Login.class);
+                startActivity(i);
+            }
+        });
+
+        profilseiteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Profilseite.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });

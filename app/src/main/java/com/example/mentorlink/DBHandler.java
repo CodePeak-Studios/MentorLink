@@ -836,22 +836,52 @@ public class DBHandler extends SQLiteOpenHelper {
      |                                 Abschlussarbeiten CREATE                                    |
      **********************************************************************************************/
 
-    public void addAbschlussarbeit(Abschlussarbeit newabschlussarbeit)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addAbschlussarbeit(Abschlussarbeit newabschlussarbeit) {
+        try {
+            Class.forName(Classes_SQL);
+            connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            String updateQuery = "INSERT INTO " + Table_SECOND + " (" +
+                    col_KATEGORIE + ", " + col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " +
+                    col_STUDENT + ", " +  col_BETREUER + ", " + col_ZWEITGUTACHTER + ", " + col_STATUS + ") " +
+                    "VALUES (" +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "? )";
 
-        ContentValues values = new ContentValues();
-
-        values.put(col_UEBERSCHRIFT, newabschlussarbeit.getUeberschrift());
-        values.put(col_KURZBESCHREIBUNG, newabschlussarbeit.getKurzbeschreibung());
-        values.put(col_KATEGORIE, newabschlussarbeit.getKategorie());
-        values.put(col_STATUS, newabschlussarbeit.getStatus());
-        values.put(col_BETREUER, newabschlussarbeit.getBetreuer());
-        values.put(col_ZWEITGUTACHTER, newabschlussarbeit.getZweitgutachter());
-        values.put(col_STUDENT, newabschlussarbeit.getStudent());
-
-        db.insert(Table_SECOND, null, values);
-
-        db.close();
+            try {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setInt(1, newabschlussarbeit.getKategorie());
+                preparedStatement.setString(2, newabschlussarbeit.getUeberschrift());
+                preparedStatement.setString(3, newabschlussarbeit.getKurzbeschreibung());
+                preparedStatement.setInt(4, newabschlussarbeit.getStudent());
+                preparedStatement.setInt(5, newabschlussarbeit.getBetreuer());
+                preparedStatement.setInt(6, newabschlussarbeit.getZweitgutachter());
+                preparedStatement.setInt(7, newabschlussarbeit.getStatus());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Log.d("SQL-Fehler", e.getMessage());
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 }

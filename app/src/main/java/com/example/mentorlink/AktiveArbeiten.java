@@ -23,7 +23,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
     RecyclerViewAdapterAktiveArbeiten adapter;
     DBHandler dbHandler;
     ImageButton btnHome;
-    private int userId;
+    public int userId;
 
 
     @Override
@@ -69,7 +69,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAktiveArbeiten);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RecyclerViewAdapterAktiveArbeiten(this, abschlussarbeiten);
+        adapter = new RecyclerViewAdapterAktiveArbeiten(this, abschlussarbeiten, dbHandler.getUserNachID(userId));
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 

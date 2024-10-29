@@ -24,11 +24,13 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
     private ArrayList<Abschlussarbeit> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private User user;
 
     // data is passed into the constructor
-    RecyclerViewAdapterAktiveArbeiten(Context context, ArrayList<Abschlussarbeit> data) {
+    RecyclerViewAdapterAktiveArbeiten(Context context, ArrayList<Abschlussarbeit> data, User angemeldeterUser) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.user = angemeldeterUser;
     }
 
     // inflates the row layout from xml when needed
@@ -45,11 +47,11 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
         holder.tvUeberschrift.setText(Ueberschrift);
         holder.tvKurzbeschreibung.setText(mData.get(position).getKurzbeschreibung());
         holder.tvStatus.setText(mData.get(position).getStatusName(mData.get(position).getStatus()));
-        //TODO hier muss in jedem Fall noch besser gelöst werden, wie Betreuer und Zweitgutachter aufgelöst werden
-        if(mData.get(position).getBetreuer() == 1)
+
+        if(mData.get(position).getBetreuer() == user.getId())
         {
             holder.btnRolle.setText("Betreuer");
-        } if (mData.get(position).getZweitgutachter() == 1)
+        } if (mData.get(position).getZweitgutachter() == user.getId())
         {
             holder.btnRolle.setText("Zweitgutachter");
             holder.btnRolle.setBackgroundColor(ContextCompat.getColor(holder.btnRolle.getContext(), R.color.pink));

@@ -75,12 +75,11 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
 
         Abschlussarbeit clicked = adapter.getItem(position);
 
         Intent intentBestehenderVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
-        intentBestehenderVorschlag.putExtra("idUser", 1);
+        intentBestehenderVorschlag.putExtra("aktiverUser", userId);
         intentBestehenderVorschlag.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentBestehenderVorschlag);
     }

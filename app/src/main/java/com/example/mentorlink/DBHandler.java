@@ -438,6 +438,38 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    public void updateFachbereiche(String fachbereiche, int userID) {
+
+        try {Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch (ClassNotFoundException e) {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+                    col_FACHBEREICHE + " = ? " +
+                    "WHERE " + col_ID + " = ?";
+
+            try {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setString(1, fachbereiche);
+                preparedStatement.setInt(2, userID);
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
+    }
+
     /**********************************************************************************************
      |                                 Abschlussarbeiten Getter                                   |
      **********************************************************************************************/

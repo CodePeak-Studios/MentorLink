@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), BetreuerUebersicht.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });

@@ -73,7 +73,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         getOnBackPressedDispatcher().addCallback(this, callback);
 
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(1, 1);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(userId, 1);
 
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override

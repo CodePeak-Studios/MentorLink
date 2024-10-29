@@ -476,7 +476,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Abschlussarbeit getAbschlussarbeit() {
 
-
         Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
@@ -505,7 +504,6 @@ public class DBHandler extends SQLiteOpenHelper {
                         abschlussarbeit.setBetreuer(resultSet.getInt(6));
                         abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
                         abschlussarbeit.setStatus(resultSet.getInt(8));
-                        abschlussarbeiten.add(abschlussarbeit);
                     }
                     while (resultSet.next());
                 }
@@ -567,7 +565,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserID(int userID) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -580,6 +577,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -589,6 +587,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -615,7 +614,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserIDUndStatus(int userID, int status) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -628,6 +626,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -635,9 +634,11 @@ public class DBHandler extends SQLiteOpenHelper {
                         " OR " + col_BETREUER + " = " + userID +
                         " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
                         " AND " + col_STATUS + " = " + status);
-                if(resultSet.next())
+                if (resultSet.next())
                 {
-                    do {
+                    do
+                    {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -662,7 +663,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -675,6 +675,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -684,6 +685,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -698,6 +700,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 }
             } catch (Exception throwables) {
                 throwables.printStackTrace();
+                Log.d("SQL-Fehler", throwables.getMessage());
             }
         }
         else {
@@ -711,7 +714,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachStatus(int status) {
 
-        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
         try{
@@ -724,6 +726,7 @@ public class DBHandler extends SQLiteOpenHelper {
             Statement statement = null;
             try
             {
+                statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
@@ -731,6 +734,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 if(resultSet.next())
                 {
                     do {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
                         abschlussarbeit.setId(resultSet.getInt(1));
                         abschlussarbeit.setKategorie(resultSet.getInt(2));
                         abschlussarbeit.setUeberschrift(resultSet.getString(3));
@@ -809,14 +813,14 @@ public class DBHandler extends SQLiteOpenHelper {
         catch (SQLException throwables) {throwables.printStackTrace();}
         if (connection != null)
         {        PreparedStatement preparedStatement = null;
-            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+            String updateQuery = "UPDATE " + Table_SECOND + " SET " +
                     col_KATEGORIE + " = ?, " +
                     col_UEBERSCHRIFT + " = ?, " +
                     col_KURZBESCHREIBUNG + " = ?, " +
                     col_STUDENT + " = ?, " +
                     col_BETREUER + " = ?, " +
                     col_ZWEITGUTACHTER + " = ?, " +
-                    col_STATUS + " = ?, " +
+                    col_STATUS + " = ? " +
                     "WHERE " + col_ID_ABSCHLUSSARBEITEN + " = ?";
             try
             {
@@ -831,7 +835,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 preparedStatement.setInt(8, abschlussarbeit.getId());
                 preparedStatement.executeUpdate();
             }
-            catch (SQLException e) {e.printStackTrace();}
+            catch (SQLException e) {e.printStackTrace(); Log.d("SQL-Fehler", e.getMessage());}
             finally
             {
                 try
@@ -864,22 +868,52 @@ public class DBHandler extends SQLiteOpenHelper {
      |                                 Abschlussarbeiten CREATE                                    |
      **********************************************************************************************/
 
-    public void addAbschlussarbeit(Abschlussarbeit newabschlussarbeit)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addAbschlussarbeit(Abschlussarbeit newabschlussarbeit) {
+        try {
+            Class.forName(Classes_SQL);
+            connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if (connection != null) {
+            PreparedStatement preparedStatement = null;
+            String updateQuery = "INSERT INTO " + Table_SECOND + " (" +
+                    col_KATEGORIE + ", " + col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " +
+                    col_STUDENT + ", " +  col_BETREUER + ", " + col_ZWEITGUTACHTER + ", " + col_STATUS + ") " +
+                    "VALUES (" +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "?, " +
+                    "? )";
 
-        ContentValues values = new ContentValues();
-
-        values.put(col_UEBERSCHRIFT, newabschlussarbeit.getUeberschrift());
-        values.put(col_KURZBESCHREIBUNG, newabschlussarbeit.getKurzbeschreibung());
-        values.put(col_KATEGORIE, newabschlussarbeit.getKategorie());
-        values.put(col_STATUS, newabschlussarbeit.getStatus());
-        values.put(col_BETREUER, newabschlussarbeit.getBetreuer());
-        values.put(col_ZWEITGUTACHTER, newabschlussarbeit.getZweitgutachter());
-        values.put(col_STUDENT, newabschlussarbeit.getStudent());
-
-        db.insert(Table_SECOND, null, values);
-
-        db.close();
+            try {
+                preparedStatement = connection.prepareStatement(updateQuery);
+                preparedStatement.setInt(1, newabschlussarbeit.getKategorie());
+                preparedStatement.setString(2, newabschlussarbeit.getUeberschrift());
+                preparedStatement.setString(3, newabschlussarbeit.getKurzbeschreibung());
+                preparedStatement.setInt(4, newabschlussarbeit.getStudent());
+                preparedStatement.setInt(5, newabschlussarbeit.getBetreuer());
+                preparedStatement.setInt(6, newabschlussarbeit.getZweitgutachter());
+                preparedStatement.setInt(7, newabschlussarbeit.getStatus());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Log.d("SQL-Fehler", e.getMessage());
+            } finally {
+                try {
+                    if (preparedStatement != null) preparedStatement.close();
+                    if (connection != null) connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            System.out.println("Verbindung zu SQL Server konnte nicht hergestellt werden.");
+        }
     }
 }

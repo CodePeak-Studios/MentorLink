@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
 
                 user = dbHandler.checkPassword(edtEmail.getText().toString(), edtPasswort.getText().toString());
 
-                if(user == null)
+                if(user.getId() == 0)
                 {
                     Toast.makeText(getApplicationContext(), "Anmeldung fehlgeschlagen", Toast.LENGTH_LONG).show();
                 }

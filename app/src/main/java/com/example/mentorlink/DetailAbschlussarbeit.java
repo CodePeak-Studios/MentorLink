@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,13 +35,13 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
 
     private TextView tvDetailAbschlussarbeitUeberschrift;
     private TextView tvDetailAbschlussarbeitBetreuer;
+    private ImageButton btnBack;
 
     private int userId;
 
 
     private DBHandler dbHandler;
 
-    private int intentIdUser;
     private int intentAbschlussarbeit;
     private Abschlussarbeit geladeneAbschlussarbeit;
 
@@ -71,11 +72,12 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         edtDetailAbschlussarbeitKurzbeschreibung = findViewById(R.id.edtDetailAbschlussarbeitKurzbeschreibung);
         tvDetailAbschlussarbeitUeberschrift = findViewById(R.id.edtDetailAbschlussarbeitUeberschrift);
         tvDetailAbschlussarbeitBetreuer = findViewById(R.id.tvDetailAbschlussarbeitBetreuerName);
+        btnBack = findViewById(R.id.btn_zurueck);
 
 
         Intent intentVonVorschlaege = getIntent();
 
-        intentIdUser = intentVonVorschlaege.getIntExtra("idUser", -1);
+        userId = intentVonVorschlaege.getIntExtra("aktiverUser", -1);
         intentAbschlussarbeit = intentVonVorschlaege.getIntExtra("AbschlussarbeitId", -1);
 
         try {
@@ -112,6 +114,15 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         tvDetailAbschlussarbeitStudentName.setText(dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent()).getVorname()
                 + " " + dbHandler.getUserNachID(geladeneAbschlussarbeit.getStudent()).getNachname());
 
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                i.putExtra("aktiverUser", userId);
+                startActivity(i);
+            }
+        });
 
         btnSearchZweitgutachter.setOnClickListener(new View.OnClickListener() {
             @Override

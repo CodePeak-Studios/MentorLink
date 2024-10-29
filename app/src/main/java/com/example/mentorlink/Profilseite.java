@@ -54,6 +54,7 @@ public class Profilseite extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profilseite.this, MainActivity.class);
+                intent.putExtra("aktiverUser", userId);
                 startActivity(intent);
             }
         });
@@ -67,7 +68,7 @@ public class Profilseite extends AppCompatActivity {
         String kompletterName = user.getVorname() + " " + user.getNachname();
         tvProfilName.setText(kompletterName);
         tvProfilEmail.setText(user.getMail());
-        tvProfilAuslastung.setText(user.getAuslastung());
+        tvProfilAuslastung.setText(user.getAuslastungsString(user.getAuslastung()));
         tvProfilFachbereiche.setText(user.getFachbereiche());
 
         editFachbereicheBtn.setOnClickListener(new View.OnClickListener() {

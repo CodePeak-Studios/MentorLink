@@ -56,6 +56,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });

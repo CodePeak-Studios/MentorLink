@@ -22,6 +22,7 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
     RecyclerViewAdapterBetreuerUebersicht adapter;
     DBHandler dbHandler;
     ImageButton btnHome;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +38,14 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
         dbHandler = new DBHandler(getApplicationContext());
         btnHome = findViewById(R.id.btn_home);
 
+        Intent intentvonStartseite = getIntent();
+        userId = intentvonStartseite.getIntExtra("aktiverUser", -1);
+
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
@@ -50,6 +55,7 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         };
@@ -71,6 +77,7 @@ public class BetreuerUebersicht extends AppCompatActivity implements RecyclerVie
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(this, DetailBetreuer.class);
         intent.putExtra("betreuerID", position);
+        intent.putExtra("aktiverUser", userId);
         startActivity(intent);
     }
 

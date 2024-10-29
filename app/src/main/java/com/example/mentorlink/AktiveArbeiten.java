@@ -48,11 +48,12 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("aktiverUser", userId);
                 startActivity(i);
             }
         });
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(1);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(userId);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
@@ -81,7 +82,7 @@ public class AktiveArbeiten extends AppCompatActivity implements RecyclerViewAda
 
         Intent intentAktiveAbschlussarbeit = new Intent(getApplicationContext(), DetailAktiveAbschlussarbeit.class);
         //TODO Hier muss der aktuelle User als Parameter übergeben werden
-        intentAktiveAbschlussarbeit.putExtra("idUser", userId);
+        intentAktiveAbschlussarbeit.putExtra("aktiverUser", userId);
         intentAktiveAbschlussarbeit.putExtra("AbschlussarbeitId", clicked.getId());
         startActivity(intentAktiveAbschlussarbeit);
     }

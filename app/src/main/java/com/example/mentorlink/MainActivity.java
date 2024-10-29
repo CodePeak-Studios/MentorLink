@@ -1,6 +1,7 @@
 package com.example.mentorlink;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -79,35 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnStartAbschlussarbeiten.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
-                i.putExtra("aktiverUser", userId);
-                startActivity(i);
-            }
-        });
-
-        btnStartMeineThemen.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
-                i.putExtra("aktiverUser", userId);
-                startActivity(i);
-            }
-        });
-
-        btnStartArchiv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
-                i.putExtra("aktiverUser", userId);
-                startActivity(i);
-            }
-        });
-
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +96,43 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        if (user.getRolle() == 1) {
+            btnStartAbschlussarbeiten.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+            });
+
+            btnStartMeineThemen.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+            });
+
+            btnStartArchiv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+            });
+        } else {
+            int color = getResources().getColor(R.color.darkRot);
+            btnStartAbschlussarbeiten.setBackgroundTintList(ColorStateList.valueOf(color));
+            btnStartMeineThemen.setBackgroundTintList(ColorStateList.valueOf(color));
+            btnStartArchiv.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
+
 
 
         String kompletterName = user.getVorname() + " " + user.getNachname();

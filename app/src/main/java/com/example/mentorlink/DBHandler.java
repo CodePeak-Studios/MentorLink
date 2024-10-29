@@ -781,14 +781,14 @@ public class DBHandler extends SQLiteOpenHelper {
         catch (SQLException throwables) {throwables.printStackTrace();}
         if (connection != null)
         {        PreparedStatement preparedStatement = null;
-            String updateQuery = "UPDATE " + Table_FIRST + " SET " +
+            String updateQuery = "UPDATE " + Table_SECOND + " SET " +
                     col_KATEGORIE + " = ?, " +
                     col_UEBERSCHRIFT + " = ?, " +
                     col_KURZBESCHREIBUNG + " = ?, " +
                     col_STUDENT + " = ?, " +
                     col_BETREUER + " = ?, " +
                     col_ZWEITGUTACHTER + " = ?, " +
-                    col_STATUS + " = ?, " +
+                    col_STATUS + " = ? " +
                     "WHERE " + col_ID_ABSCHLUSSARBEITEN + " = ?";
             try
             {
@@ -803,7 +803,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 preparedStatement.setInt(8, abschlussarbeit.getId());
                 preparedStatement.executeUpdate();
             }
-            catch (SQLException e) {e.printStackTrace();}
+            catch (SQLException e) {e.printStackTrace(); Log.d("SQL-Fehler", e.getMessage());}
             finally
             {
                 try

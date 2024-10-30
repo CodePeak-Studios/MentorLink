@@ -662,8 +662,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
-                        " WHERE "  + "(" + col_STUDENT + " = " + userID +
-                        " OR " + col_BETREUER + " = " + userID +
+                        " WHERE "  + "(" + col_BETREUER + " = " + userID +
                         " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
                         " AND " + col_STATUS + " = " + status);
                 if (resultSet.next())
@@ -712,7 +711,8 @@ public class DBHandler extends SQLiteOpenHelper {
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
                         " WHERE "  + "(" + col_BETREUER + " = " + userID +
-                        " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID +
+                        " OR " + col_STUDENT + " = " + userID + ")" +
                         " AND " + col_STATUS + " != " + 1);
                 if(resultSet.next())
                 {

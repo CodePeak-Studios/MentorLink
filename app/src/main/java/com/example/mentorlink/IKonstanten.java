@@ -32,4 +32,6 @@ public interface IKonstanten
     public static final String STAT_KOLLOQ_BEENDET = "Kolloquium beendet";
     public static final String STAT_RECHNUNG_GESTELLT = "Rechnung gestellt";
     public static final String STAT_RECHNUNG_BEGLICHEN = "Rechnung beglichen";
+    public static final String STAT_ARCHIVIERT = "Archiviert";
+
 }

@@ -692,7 +692,8 @@ public class DBHandler extends SQLiteOpenHelper {
         return abschlussarbeiten;
     }
 
-    public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
+    //Fuer mehrere ausschliessende Status
+    public ArrayList<Abschlussarbeit> getAlleAbschlussarbeitenNachUserIDUndStatus(int userID, int status, int status2) {
 
         ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
 
@@ -711,9 +712,63 @@ public class DBHandler extends SQLiteOpenHelper {
                         col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
                         col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
                         " WHERE "  + "(" + col_BETREUER + " = " + userID +
+                        " OR " + col_ZWEITGUTACHTER + " = " + userID + ")" +
+                        " AND " + "( " + col_STATUS + " = " + status +
+                        " OR " + col_STATUS + " = " + status2 + ")");
+                if (resultSet.next())
+                {
+                    do
+                    {
+                        Abschlussarbeit abschlussarbeit = new Abschlussarbeit();
+                        abschlussarbeit.setId(resultSet.getInt(1));
+                        abschlussarbeit.setKategorie(resultSet.getInt(2));
+                        abschlussarbeit.setUeberschrift(resultSet.getString(3));
+                        abschlussarbeit.setKurzbeschreibung(resultSet.getString(4));
+                        abschlussarbeit.setStudent(resultSet.getInt(5));
+                        abschlussarbeit.setBetreuer(resultSet.getInt(6));
+                        abschlussarbeit.setZweitgutachter(resultSet.getInt(7));
+                        abschlussarbeit.setStatus(resultSet.getInt(8));
+                        abschlussarbeiten.add(abschlussarbeit);
+                    }
+                    while (resultSet.next());
+                }
+            } catch (Exception throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        else {
+            Log.d("Login-Fehler", "Fehler beim Login des Users.");
+        }
+        return abschlussarbeiten;
+    }
+
+    public ArrayList<Abschlussarbeit> getAlleAktivenAbschlussarbeitenNachUserIDUndStatus(int userID) {
+
+        ArrayList<Abschlussarbeit> abschlussarbeiten = new ArrayList<Abschlussarbeit>();
+
+        try{
+            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);}
+        catch(ClassNotFoundException e)
+        {e.printStackTrace();} catch (SQLException throwables) {throwables.printStackTrace();}
+
+        if(connection != null)
+        {
+            Statement statement = null;
+            try
+            {
+                statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT " + col_ID_ABSCHLUSSARBEITEN + ", " + col_KATEGORIE + ", " +
+                        col_UEBERSCHRIFT + ", " + col_KURZBESCHREIBUNG + ", " + col_STUDENT + ", " + col_BETREUER + ", " +
+                        col_ZWEITGUTACHTER + ", " + col_STATUS + " FROM " + Table_SECOND +
+                        " WHERE "  + "((" + col_BETREUER + " = " + userID +
                         " OR " + col_ZWEITGUTACHTER + " = " + userID +
                         " OR " + col_STUDENT + " = " + userID + ")" +
-                        " AND " + col_STATUS + " != " + 1);
+                        " AND " + col_STATUS + " != " + "1" +
+                        " AND " + col_STATUS + " != " + "11)" +
+                        " OR " + "(" + col_STUDENT + " = " + userID +
+                        " AND " + col_STATUS + " <= 8" +
+                        " AND " + col_STATUS + " != 1)");
+                        ;
                 if(resultSet.next())
                 {
                     do {
@@ -889,12 +944,7 @@ public class DBHandler extends SQLiteOpenHelper {
      |                                 Abschlussarbeiten DELETE                                    |
      **********************************************************************************************/
 
-    public void deleteAbschlussarbeit(int abschlussarbeitId)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Table_SECOND, "ID=" + Integer.toString(abschlussarbeitId), null);
-        db.close();
-    }
+    //Aktuell wird anstatt des Löschens archiviert
 
     /**********************************************************************************************
      |                                 Abschlussarbeiten CREATE                                    |

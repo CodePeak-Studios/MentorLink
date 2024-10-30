@@ -158,15 +158,47 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
         });
 
 
-        //Loescht eine Abschlussarbeit
+        //Archiviert eine Abschlussarbeit
         btnDetailAbschlussarbeitLoeschen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
-                Intent intent = new Intent(getApplicationContext(), AktiveArbeiten.class);
-                intent.putExtra("aktiverUser", userId);
-                startActivity(intent);
+            public void onClick(View v) {
+                if(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Es wurden nicht alle benoetigten Felder ausgefüllt.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Abschlussarbeit updateAbschlussarbeit = new Abschlussarbeit();
+                    updateAbschlussarbeit.setId(geladeneAbschlussarbeit.getId());
+                    updateAbschlussarbeit.setUeberschrift(geladeneAbschlussarbeit.getUeberschrift());
+                    updateAbschlussarbeit.setBetreuer(geladeneAbschlussarbeit.getBetreuer());
+                    updateAbschlussarbeit.setKurzbeschreibung(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString());
+                    if(!(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setZweitgutachter(dbHandler.getUserNachMail(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString()).getId());
+                    }
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getZweitgutachter() == 0)){updateAbschlussarbeit.setZweitgutachter(geladeneAbschlussarbeit.getZweitgutachter());}
+                        else {updateAbschlussarbeit.setZweitgutachter(0);}
+                    }
+                    if(!(edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setStudent(dbHandler.getUserNachMail(edtDetailAbschlussarbeitStudentMail.getText().toString()).getId());
+                    }
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getStudent() == 0)){updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
+                        else {updateAbschlussarbeit.setStudent(0);}
+                    }
+
+                    updateAbschlussarbeit.setKategorie(spnDetailAbschlussarbeitKategorie.getSelectedItem().toString());
+                    updateAbschlussarbeit.setStatus(IKonstanten.STAT_ARCHIVIERT);
+                    dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
+                    Intent intent = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                    intent.putExtra("aktiverUser", userId);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -243,7 +275,8 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
                         IKonstanten.STAT_KOLLOQ_TERMINIERT,
                         IKonstanten.STAT_KOLLOQ_BEENDET,
                         IKonstanten.STAT_RECHNUNG_GESTELLT,
-                        IKonstanten.STAT_RECHNUNG_BEGLICHEN
+                        IKonstanten.STAT_RECHNUNG_BEGLICHEN,
+                        IKonstanten.STAT_ARCHIVIERT
                 };
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,

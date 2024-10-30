@@ -127,10 +127,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
-            int color = getResources().getColor(R.color.darkRot);
-            btnStartAbschlussarbeiten.setBackgroundTintList(ColorStateList.valueOf(color));
+            int color = getResources().getColor(R.color.grey);
             btnStartMeineThemen.setBackgroundTintList(ColorStateList.valueOf(color));
+            btnStartMeineThemen.setAlpha(0.6f);
             btnStartArchiv.setBackgroundTintList(ColorStateList.valueOf(color));
+            btnStartArchiv.setAlpha(0.6f);
+            btnStartAbschlussarbeiten.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), AktiveArbeiten.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+            });
         }
 
 

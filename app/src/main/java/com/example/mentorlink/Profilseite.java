@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class Profilseite extends AppCompatActivity implements AdapterView.OnItem
     private EditText etFachbereiche;
     private Button editFachbereicheBtn;
     private Button fachbereicheSpeichernBtn;
+    private LinearLayout llFachbereiche;
+    private LinearLayout llAuslastung;
 
     private int userId;
     private User user;
@@ -50,6 +53,8 @@ public class Profilseite extends AppCompatActivity implements AdapterView.OnItem
         etFachbereiche = findViewById(R.id.editFachbereicheInput);
         editFachbereicheBtn = findViewById(R.id.editFachbereichBtn);
         fachbereicheSpeichernBtn = findViewById(R.id.fachbereicheSpeichernBtn);
+        llFachbereiche = findViewById(R.id.fachbereichLayout);
+        llAuslastung = findViewById(R.id.spinnerLayout);
 
         btn_zurueck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +71,8 @@ public class Profilseite extends AppCompatActivity implements AdapterView.OnItem
         userId = intentUserId.getIntExtra("aktiverUser", -1);
         user = dbHandler.getUserNachID(userId);
 
+
+
         String kompletterName = user.getVorname() + " " + user.getNachname();
         tvProfilName.setText(kompletterName);
         tvProfilEmail.setText(user.getMail());
@@ -79,6 +86,15 @@ public class Profilseite extends AppCompatActivity implements AdapterView.OnItem
         setSpinnerAufAktuelleAuslastung(dropdown, user.getAuslastung());
 
         dropdown.setOnItemSelectedListener(this);
+
+        int rolle = user.getRolle();
+        if (rolle == 0) {
+            llFachbereiche.setVisibility(View.GONE);
+            llAuslastung.setVisibility(View.GONE);
+            editFachbereicheBtn.setVisibility(View.GONE);
+            etFachbereiche.setVisibility(View.GONE);
+            fachbereicheSpeichernBtn.setVisibility(View.GONE);
+        }
 
         editFachbereicheBtn.setOnClickListener(new View.OnClickListener() {
             @Override

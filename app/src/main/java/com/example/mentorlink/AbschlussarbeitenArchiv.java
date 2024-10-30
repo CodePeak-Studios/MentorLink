@@ -63,7 +63,7 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
         getOnBackPressedDispatcher().addCallback(this, callback);
 
 
-        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(userId, 10);
+        ArrayList<Abschlussarbeit> abschlussarbeiten = dbHandler.getAlleAbschlussarbeitenNachUserIDUndStatus(userId, 10, 11);
 
         //RecyclerView erstellen
         RecyclerView recyclerView = findViewById(R.id.rvAbschlussarbeitenArchiv);
@@ -81,6 +81,7 @@ public class AbschlussarbeitenArchiv extends AppCompatActivity implements Recycl
         Intent intentBestehenderVorschlag = new Intent(getApplicationContext(), DetailAbschlussarbeit.class);
         intentBestehenderVorschlag.putExtra("aktiverUser", userId);
         intentBestehenderVorschlag.putExtra("AbschlussarbeitId", clicked.getId());
+        intentBestehenderVorschlag.putExtra("kommtAusArchiv", true);
         startActivity(intentBestehenderVorschlag);
     }
 

@@ -38,6 +38,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
     private ImageButton btnBack;
 
     private int userId;
+    private boolean kommtAusArchiv;
 
 
     private DBHandler dbHandler;
@@ -79,6 +80,7 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
 
         userId = intentVonVorschlaege.getIntExtra("aktiverUser", -1);
         intentAbschlussarbeit = intentVonVorschlaege.getIntExtra("AbschlussarbeitId", -1);
+        kommtAusArchiv = intentVonVorschlaege.getBooleanExtra("kommtAusArchiv", false);
 
         try {
             geladeneAbschlussarbeit = dbHandler.getAbschlussarbeitNachID(intentAbschlussarbeit);
@@ -94,9 +96,18 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
-                i.putExtra("aktiverUser", userId);
-                startActivity(i);
+                if(!(kommtAusArchiv))
+                {
+                    Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+                else
+                {
+                    Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -118,9 +129,18 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
-                i.putExtra("aktiverUser", userId);
-                startActivity(i);
+                if(!(kommtAusArchiv))
+                {
+                    Intent i = new Intent(getApplicationContext(), Abschlussarbeiten.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
+                else
+                {
+                    Intent i = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                    i.putExtra("aktiverUser", userId);
+                    startActivity(i);
+                }
             }
         });
 
@@ -160,12 +180,44 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
         //Loescht eine Abschlussarbeit
         btnDetailAbschlussarbeitLoeschen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                dbHandler.deleteAbschlussarbeit(geladeneAbschlussarbeit.getId());
-                Intent intent = new Intent(getApplicationContext(), Abschlussarbeiten.class);
-                intent.putExtra("aktiverUser", userId);
-                startActivity(intent);
+            public void onClick(View v) {
+                if(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString().isEmpty())
+                {
+                    Toast.makeText(getApplicationContext(), "Es wurden nicht alle benoetigten Felder ausgefüllt.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Abschlussarbeit updateAbschlussarbeit = new Abschlussarbeit();
+                    updateAbschlussarbeit.setId(geladeneAbschlussarbeit.getId());
+                    updateAbschlussarbeit.setUeberschrift(geladeneAbschlussarbeit.getUeberschrift());
+                    updateAbschlussarbeit.setBetreuer(geladeneAbschlussarbeit.getBetreuer());
+                    updateAbschlussarbeit.setKurzbeschreibung(edtDetailAbschlussarbeitKurzbeschreibung.getText().toString());
+                    if(!(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setZweitgutachter(dbHandler.getUserNachMail(edtDetailAbschlussarbeitZweitgutachterMail.getText().toString()).getId());
+                    }
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getZweitgutachter() == 0)){updateAbschlussarbeit.setZweitgutachter(geladeneAbschlussarbeit.getZweitgutachter());}
+                        else {updateAbschlussarbeit.setZweitgutachter(0);}
+                    }
+                    if(!(edtDetailAbschlussarbeitStudentMail.getText().toString().isEmpty()))
+                    {
+                        updateAbschlussarbeit.setStudent(dbHandler.getUserNachMail(edtDetailAbschlussarbeitStudentMail.getText().toString()).getId());
+                    }
+                    else
+                    {
+                        if(!(geladeneAbschlussarbeit.getStudent() == 0)){updateAbschlussarbeit.setStudent(geladeneAbschlussarbeit.getStudent());}
+                        else {updateAbschlussarbeit.setStudent(0);}
+                    }
+
+                    updateAbschlussarbeit.setKategorie(spnDetailAbschlussarbeitKategorie.getSelectedItem().toString());
+                    updateAbschlussarbeit.setStatus(IKonstanten.STAT_ARCHIVIERT);
+                    dbHandler.updateAbschlussarbeit(updateAbschlussarbeit);
+                    Intent intent = new Intent(getApplicationContext(), AbschlussarbeitenArchiv.class);
+                    intent.putExtra("aktiverUser", userId);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -243,7 +295,8 @@ public class DetailAbschlussarbeit extends AppCompatActivity implements IKonstan
                         IKonstanten.STAT_KOLLOQ_TERMINIERT,
                         IKonstanten.STAT_KOLLOQ_BEENDET,
                         IKonstanten.STAT_RECHNUNG_GESTELLT,
-                        IKonstanten.STAT_RECHNUNG_BEGLICHEN
+                        IKonstanten.STAT_RECHNUNG_BEGLICHEN,
+                        IKonstanten.STAT_ARCHIVIERT
                 };
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,

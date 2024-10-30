@@ -893,12 +893,7 @@ public class DBHandler extends SQLiteOpenHelper {
      |                                 Abschlussarbeiten DELETE                                    |
      **********************************************************************************************/
 
-    public void deleteAbschlussarbeit(int abschlussarbeitId)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Table_SECOND, "ID=" + Integer.toString(abschlussarbeitId), null);
-        db.close();
-    }
+    //Aktuell wird anstatt des Löschens archiviert
 
     /**********************************************************************************************
      |                                 Abschlussarbeiten CREATE                                    |

@@ -243,7 +243,8 @@ public class DetailAktiveAbschlussarbeit extends AppCompatActivity implements IK
                         IKonstanten.STAT_KOLLOQ_TERMINIERT,
                         IKonstanten.STAT_KOLLOQ_BEENDET,
                         IKonstanten.STAT_RECHNUNG_GESTELLT,
-                        IKonstanten.STAT_RECHNUNG_BEGLICHEN
+                        IKonstanten.STAT_RECHNUNG_BEGLICHEN,
+                        IKonstanten.STAT_ARCHIVIERT
                 };
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,

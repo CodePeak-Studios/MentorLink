@@ -191,6 +191,9 @@ public class Abschlussarbeit
             case 10:
                 statusName = "Rechnung beglichen";
                 break;
+            case 11:
+                statusName = "Archiviert";
+                break;
             default:
                 statusName = "Statusfehler";
         }
@@ -266,6 +269,9 @@ public class Abschlussarbeit
                 break;
             case "Rechnung beglichen":
                 this.status = 10;
+                break;
+            case "Archiviert":
+                this.status = 11;
                 break;
             default:
                 this.status = -1;

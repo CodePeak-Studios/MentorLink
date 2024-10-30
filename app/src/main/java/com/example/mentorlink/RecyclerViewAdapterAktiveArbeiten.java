@@ -56,6 +56,11 @@ public class RecyclerViewAdapterAktiveArbeiten extends RecyclerView.Adapter<Recy
             holder.btnRolle.setText("Zweitgutachter");
             holder.btnRolle.setBackgroundColor(ContextCompat.getColor(holder.btnRolle.getContext(), R.color.pink));
         }
+        if (mData.get(position).getStudent() == user.getId())
+        {
+            holder.btnRolle.setText("Student");
+            holder.btnRolle.setBackgroundColor(ContextCompat.getColor(holder.btnRolle.getContext(), R.color.darkRot));
+        }
 
     }
 

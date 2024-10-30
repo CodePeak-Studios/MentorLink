@@ -125,7 +125,8 @@
             android:background="@drawable/customborder"
             android:backgroundTint="@color/reinWeiss"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/spinnerLayout">
 
             <Spinner
                 android:id="@+id/spinnerAuslastung"
@@ -143,7 +144,8 @@
             android:background="@drawable/customborder"
             android:backgroundTint="@color/reinWeiss"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/fachbereichLayout">
 
             <TextView
                 android:id="@+id/tvProfilseiteFachbereicheHeader"

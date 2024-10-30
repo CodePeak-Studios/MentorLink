@@ -52,7 +52,7 @@ public class Abschlussarbeiten extends AppCompatActivity implements RecyclerView
         Intent intent = getIntent();
         userId = intent.getIntExtra("aktiverUser", userId);
 
-        btnHome.setOnClickListener(new View.OnClickListener() {
+         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);

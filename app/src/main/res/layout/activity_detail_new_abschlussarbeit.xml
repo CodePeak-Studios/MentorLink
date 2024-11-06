@@ -98,13 +98,14 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/edtDetailNewAbschlussarbeitUeberschrift"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Blockchain-Technologie"
+                android:text=""
+                android:hint="Überschrift"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -136,7 +137,7 @@
                 android:scrollbars="vertical"
                 android:singleLine="false"
                 android:textSize="18sp"
-                android:text="Untersuchung, wie historische Gebäude erhalten und gleichzeitig an moderne Nutzungsanforderungen angepasst werden können."
+                android:text=""
                 tools:ignore="Deprecated"
                 tools:layout_editor_absoluteX="23dp"
                 tools:layout_editor_absoluteY="39dp"

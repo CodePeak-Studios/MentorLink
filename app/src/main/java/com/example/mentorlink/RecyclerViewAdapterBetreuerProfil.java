@@ -71,6 +71,7 @@ public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<Recy
             }
             ((HeaderViewHolder) holder).tvProfilFachbereiche.setText(betreuer.getFachbereiche());
 
+            headerHolder.tvProfilEmail.setText(betreuer.getMail());
             headerHolder.tvProfilFachbereicheHeader.setText("Fachbereiche:");
             headerHolder.tvProfilArbeitenHeader.setText("Ausgeschriebene Arbeiten:");
         } else {
@@ -104,12 +105,13 @@ public class RecyclerViewAdapterBetreuerProfil extends RecyclerView.Adapter<Recy
 
     // ViewHolder für den Header
     public class HeaderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvProfilName, tvProfilAuslastung, tvProfilFachbereiche, tvProfilFachbereicheHeader, tvProfilArbeitenHeader;
+        TextView tvProfilName, tvProfilAuslastung, tvProfilEmail, tvProfilFachbereiche, tvProfilFachbereicheHeader, tvProfilArbeitenHeader;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
             tvProfilName = itemView.findViewById(R.id.tvProfilName);
             tvProfilAuslastung = itemView.findViewById(R.id.tvProfilAuslastung);
+            tvProfilEmail = itemView.findViewById(R.id.tvProfilEmail);
             tvProfilFachbereiche = itemView.findViewById(R.id.tvProfilFachbereiche);
             tvProfilFachbereicheHeader = itemView.findViewById(R.id.tvProfilFachbereicheHeader);
             tvProfilArbeitenHeader = itemView.findViewById(R.id.tvProfilArbeitenHeader);

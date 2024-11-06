@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:text="Arbeit anpassen"
+        android:text="Vorschlag anpassen"
         android:textColor="@color/reinWeiss"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
@@ -157,7 +157,7 @@
 
             <LinearLayout
                 android:id="@+id/linearDetailAktiveAbschlussarbeitKategorie"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/view"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -171,7 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Kategorie: "
-                    android:layout_marginRight="25dp"
+                    android:layout_marginRight="5dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     />
@@ -189,7 +189,7 @@
 
             <LinearLayout
                 android:id="@+id/linearDetailAktiveAbschlussarbeitStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/linearDetailAktiveAbschlussarbeitKategorie"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -203,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Status: "
-                    android:layout_marginRight="50dp"
+                    android:layout_marginRight="30dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     />
@@ -220,7 +220,7 @@
 
             <LinearLayout
                 android:id="@+id/linearDetailAktiveAbschlussarbeitBetreuer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/linearDetailAktiveAbschlussarbeitStatus"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -231,19 +231,19 @@
                 >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
                     android:text="Betreuer: "
-                    android:layout_marginRight="73dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/tvDetailAktiveAbschlussarbeitBetreuerName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lena Schmidt"
-                    android:layout_marginRight="50dp"
+                    android:layout_weight="0.5"
+                    android:text="Name"
                     android:textSize="15sp"
                     android:textColor="@color/black"/>
             </LinearLayout>
@@ -257,65 +257,72 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Zweitgutachter: "
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="18dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Zweitgutachter: "
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="18dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvDetailAktiveAbschlussarbeitZweitgutachterName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Name"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvDetailAktiveAbschlussarbeitZweitgutachterName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:padding="3dp"
-                            android:text="Name"
-                            android:textSize="15sp"
-                            android:textColor="@color/black"/>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnSearchZweitgutachterDetailAktiveAbschlussarbeiten"
-                            android:layout_width="64dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:backgroundTint="@color/buttonBlau"
-                            app:icon="@drawable/baseline_search_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="0dp"
-                            />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/edtDetailAktiveAbschlussarbeitZweitgutachterMail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:layout_marginRight="10dp"
                         android:minWidth="200dp"
                         android:hint="E-Mail"
                         android:textSize="15sp"
                         android:textColor="@color/black"/>
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSearchZweitgutachterDetailAktiveAbschlussarbeiten"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:backgroundTint="@color/buttonBlau"
+                        app:icon="@drawable/baseline_search_24"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        />
+
                 </LinearLayout>
+
             </LinearLayout>
 
 
@@ -328,65 +335,72 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Student: "
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="75dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Student: "
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="18dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvDetailAktiveAbschlussarbeitStudentName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="Name"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvDetailAktiveAbschlussarbeitStudentName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:padding="3dp"
-                            android:text="Name"
-                            android:textSize="15sp"
-                            android:textColor="@color/black"/>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnSearchStudentDetailAktiveAbschlussarbeiten"
-                            android:layout_width="64dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:backgroundTint="@color/buttonBlau"
-                            app:icon="@drawable/baseline_search_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="0dp"
-                            />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/edtDetailAktiveAbschlussarbeitStudentMail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:layout_marginRight="10dp"
                         android:minWidth="200dp"
                         android:hint="E-Mail"
                         android:textSize="15sp"
                         android:textColor="@color/black"/>
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSearchStudentDetailAktiveAbschlussarbeiten"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:backgroundTint="@color/buttonBlau"
+                        app:icon="@drawable/baseline_search_24"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        />
+
                 </LinearLayout>
+
             </LinearLayout>
 
 

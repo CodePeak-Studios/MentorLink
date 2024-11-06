@@ -894,12 +894,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public void updateAbschlussarbeit(Abschlussarbeit abschlussarbeit) {
 
         try {
-            Class.forName(Classes_SQL);connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
+            Class.forName(Classes_SQL);
+            connection = DriverManager.getConnection(url_SQL, username_SQL, password_SQL);
         }
         catch (ClassNotFoundException e) {e.printStackTrace();}
         catch (SQLException throwables) {throwables.printStackTrace();}
         if (connection != null)
-        {        PreparedStatement preparedStatement = null;
+        {
+            PreparedStatement preparedStatement = null;
             String updateQuery = "UPDATE " + Table_SECOND + " SET " +
                     col_KATEGORIE + " = ?, " +
                     col_UEBERSCHRIFT + " = ?, " +
